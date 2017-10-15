@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+   
     <STYLE>
 
 
@@ -14,19 +14,17 @@
         .dropbtn {
             background-color: #4CAF59;
             color: white;
-            padding: 16px;
-            font-size: 16px;
+            padding: 14px;
+            font-size: 14px;
             border: none;
             cursor: pointer;
-
-
         }
 
         .dropdown {
             position: relative;
             display: inline-block;
             text-align: left;
-            float: right;
+            /*float: right;*/
         }
 
         .dropdown-content {
@@ -43,6 +41,7 @@
             padding: 12px 16px;
             text-decoration: none;
             display: block;
+
         }
 
         .dropdown-content a:hover {background-color: #f1f1f1}
@@ -61,10 +60,13 @@
             padding: 0;
             overflow: hidden;
             background-color: #333;
+            width:96.2%;
+            float: right;
         }
 
         li {
-            float: right;
+            float: left;
+            align-content: center;
         }
 
         li a {
@@ -96,6 +98,8 @@
 <div class="dropdown" th:fragment="dropdown" >
     <button class="dropbtn" >-></button>
     <div class="dropdown-content">
+        <th><a href="/" th:text="Classes" ></a></th>
+
         <tr th:each="course : ${List1}">
 
             <td><a th:href="'/classmates?id=' + ${course.id}" th:text="${course.coursetitle}"></a></td>
