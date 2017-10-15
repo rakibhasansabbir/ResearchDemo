@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">My Cheeses</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <STYLE>
+
+        .align{
+            text-align: center;
+        }
+
+        </STYLE>
+</head>
+<body >
+
+<nav class="align" th:fragment="navigation">
+    <a href="/stream">STREAM</a> |
+    <a href="/classmates">CLASSMATES</a> |
+    <a href="/about">ABOUT</a> |
+
+</nav>
+
+</body>
+</html>

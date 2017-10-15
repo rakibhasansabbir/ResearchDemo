@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments :: head"></head>
+
+<body class="container body-content">
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<h1 th:text="${title}">Default Title</h1>
+
+
+
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>ID</th>
+
+    </tr>
+
+    <tr th:each="student : ${List1}">
+        <td  th:text="${student.studentId}"></td>
+        <td  th:text="${student.studentName}"></td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>
