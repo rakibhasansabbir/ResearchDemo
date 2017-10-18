@@ -1,6 +1,9 @@
 package bd.ac.seu.researchdemo.Models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class student {
     @Id
@@ -18,6 +21,12 @@ public class student {
 
     @ManyToOne
     private course course;
+
+    @OneToMany
+    @JoinColumn(name="student_id")
+    private List<Attendance> attendances = new ArrayList<>();
+
+
 
     public student() {
     }

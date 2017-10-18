@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}"> Default title</h1>
+
+
+
+<form action="home" method="post" style="max-width:600px;" th:object="${cheese}">
+
+    <!--add Name-->
+    <div class="form-group">
+        <label th:for="name">ID or Initial</label>
+        <input class="form-control"  name="id" />
+        <span  class="error"></span>
+    </div>
+
+    <input type="submit" value="Login"  />
+</form>
+
+</body>
+</html>

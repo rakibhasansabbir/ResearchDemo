@@ -1,7 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head th:replace="fragments :: head"></head>
+<head th:replace="fragments :: head">
+
+    <style>
+        .dropbtn {
+            background-color: #4CAF59;
+            color: white;
+            padding: 14px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            text-align: left;
+            /*float: right;*/
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            width:96.2%;
+            float: right;
+        }
+
+        li {
+            float: left;
+            align-content: center;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+    </style>
+
+</head>
 
 <body class="container body-content">
 
@@ -17,6 +91,12 @@
 
 
 </p>
+
+<form action="attendance">
+    Attendance:
+    <input type="date" name="bday"/>
+    <input type="submit"/>
+</form>
 
 </body>
 </html>

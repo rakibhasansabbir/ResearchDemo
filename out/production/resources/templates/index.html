@@ -2,9 +2,16 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 
-<head></head>
+<head th:replace="fragments :: head">
+
+
+
+</head>
 
 <body class="container body-content">
+
+
+<div th:replace="fragments :: dropdown" ></div>
 
 
 
@@ -23,7 +30,7 @@
 
     <tr th:each="course : ${List1}">
         <td th:text="${course.coursecode}"></td>
-        <td><a th:href="'/students?id=' + ${course.id}" th:text="${course.coursetitle}"></a></td>
+        <td><a th:href="'/classmates?id=' + ${course.id}" th:text="${course.coursetitle}"></a></td>
     </tr>
 
 </table>

@@ -18,6 +18,10 @@ public class course {
     @JoinColumn(name="course_id")
     private List<student> students = new ArrayList<>();
 
+    @OneToMany
+    @JoinColumn(name="course_id")
+    private List<Attendance> attendances = new ArrayList<>();
+
 
     @OneToMany
     @JoinColumn(name="teachers_id")

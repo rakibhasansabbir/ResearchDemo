@@ -1,10 +1,9 @@
 package bd.ac.seu.researchdemo.Models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Teachers {
@@ -22,6 +21,10 @@ public class Teachers {
 
     @ManyToOne
     private course course;
+
+    @OneToMany
+    @JoinColumn(name="teachers_id")
+    private List<Attendance> attendances = new ArrayList<>();
 
     public Teachers() {
     }
