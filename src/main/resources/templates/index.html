@@ -28,9 +28,9 @@
 
     </tr>
 
-    <tr th:each="course : ${List1}">
-        <td th:text="${course.coursecode}"></td>
-        <td><a th:href="'/classmates?id=' + ${course.id}" th:text="${course.coursetitle}"></a></td>
+    <tr th:each="Course : ${List1}">
+        <td th:text="${Course.coursecode}"></td>
+        <td><a th:href="'/classmates?id=' + ${Course.id}" th:text="${Course.coursetitle}"></a></td>
     </tr>
 
 </table>

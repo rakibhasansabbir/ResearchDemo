@@ -100,9 +100,9 @@
     <div class="dropdown-content">
         <th><a href="/" th:text="Classes" ></a></th>
 
-        <tr th:each="course : ${List1}">
+        <tr th:each="Course : ${List1}">
 
-            <td><a th:href="'/classmates?id=' + ${course.id}" th:text="${course.coursetitle}"></a></td>
+            <td><a th:href="'/classmates?id=' + ${Course.id}" th:text="${Course.coursetitle}"></a></td>
         </tr>
 
     </div>

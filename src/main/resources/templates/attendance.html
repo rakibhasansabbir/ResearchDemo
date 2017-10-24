@@ -25,10 +25,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="student : ${List6}">
-            <td th:text="${student.studentId}"></td>
-            <td th:text="${student.studentName}"> </td>
-            <td><input type="checkbox" name="Ids" th:value="${student.id}" th:id="${student.id}"/></td>
+        <tr th:each="Student : ${List6}">
+            <td th:text="${Student.studentId}"></td>
+            <td th:text="${Student.studentName}"> </td>
+            <td><input type="checkbox" name="Ids" th:value="${Student.id}" th:id="${Student.id}"/></td>
 
         </tr>
 
