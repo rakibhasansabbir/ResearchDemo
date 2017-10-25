@@ -1,27 +1,33 @@
 package bd.ac.seu.researchdemo;
 
+import bd.ac.seu.researchdemo.Models.Attendance;
 import bd.ac.seu.researchdemo.Models.Course;
 import bd.ac.seu.researchdemo.Models.Faculty;
 import bd.ac.seu.researchdemo.Models.Student;
+import bd.ac.seu.researchdemo.Service.AttendenceDao;
 import bd.ac.seu.researchdemo.Service.CourseDao;
 import bd.ac.seu.researchdemo.Service.FacultyDao;
 import bd.ac.seu.researchdemo.Service.StudentDao;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
 public class ResearchdemoApplication {
 
-//	@Bean
-//	public CommandLineRunner demo(CourseDao courseDao, StudentDao studentDao, FacultyDao facultyDao) {
-//		return (args) -> {
-//			// save a couple of customers
+	LocalDateTime ldt = LocalDateTime.now();
+
+	@Bean
+	public CommandLineRunner demo(CourseDao courseDao, StudentDao studentDao, FacultyDao facultyDao,AttendenceDao attendenceDao) {
+		return (args) -> {
+//			 save a couple of customers
 //			courseDao.save(new Course("CSE4047", "Advance Java",3));
 //			courseDao.save(new Course("CSE4048","Advace Java Lab",1));
 //			courseDao.save(new Course("CSE1011","Programming Language I",3));
@@ -59,13 +65,13 @@ public class ResearchdemoApplication {
 //			facultyDao.save(new Faculty(11118, "SA","Sagufta Ashraf"));
 //			facultyDao.save(new Faculty(11119, "RB","Rakib Hasan"));
 //			facultyDao.save(new Faculty(11110, "AP","Anower Perves"));
+
+//			Attendance attendance = new Attendance();
+//			attendance.setDateTime(ldt);
+//			attendenceDao.save(attendance);
 //
-//
-//		};
-
-
-
-//	}
+		};
+	}
 	public static void main(String[] args) {
 
 		SpringApplication.run(ResearchdemoApplication.class, args);

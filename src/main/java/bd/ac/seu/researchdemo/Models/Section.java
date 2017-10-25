@@ -24,6 +24,11 @@ public class Section {
     @JoinColumn(name = "sectionId" )
     private Set<Attendance> attendanceSet = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "semesterId")
+    private Semester semester;
+
+
     public Section() {
     }
 

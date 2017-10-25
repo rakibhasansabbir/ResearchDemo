@@ -1,7 +1,10 @@
 package bd.ac.seu.researchdemo.Models;
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 
 @Entity
@@ -17,18 +20,28 @@ public class Attendance {
     @JoinColumn(name = "sectionId")
     private Section section;
 
+    @Enumerated(EnumType.STRING)
     private  Type type;
-    private Date date;
+
+    @Enumerated(EnumType.STRING)
+    private  AttendenceStatus attendenceStatus;
+
+
+    @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+    private LocalDateTime dateTime = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "semesterId")
+    private Semester semester;
 
     public Attendance() {
     }
 
-    public Attendance(int id, Student student, Section section, Date date, Type type) {
-        this.id = id;
+    public Attendance(Student student, Section section, Type type, LocalDateTime dateTime) {
         this.student = student;
         this.section = section;
-        this.date = date;
         this.type = type;
+        this.dateTime = dateTime;
     }
 
     public int getId() {
@@ -55,14 +68,6 @@ public class Attendance {
         this.section = section;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Type getType() {
         return type;
     }
@@ -71,5 +76,11 @@ public class Attendance {
         this.type = type;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 }

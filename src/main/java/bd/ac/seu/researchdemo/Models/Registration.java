@@ -8,7 +8,7 @@ public class Registration {
     @Id
     @GeneratedValue
     private int id;
-    private int semesterId;
+
     @ManyToOne
     @JoinColumn(name = "studentId")
     private Student student;
@@ -17,14 +17,18 @@ public class Registration {
     @JoinColumn(name = "sectionId")
     private Section section;
 
+    @ManyToOne
+    @JoinColumn(name = "semesterId")
+    private Semester semester;
+
+
     public Registration() {
     }
 
-    public Registration(int id, int semesterId, Student student, Section section) {
-        this.id = id;
-        this.semesterId = semesterId;
+    public Registration(Student student, Section section, Semester semester) {
         this.student = student;
         this.section = section;
+        this.semester = semester;
     }
 
     public int getId() {
@@ -33,14 +37,6 @@ public class Registration {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(int semesterId) {
-        this.semesterId = semesterId;
     }
 
     public Student getStudent() {
@@ -57,5 +53,13 @@ public class Registration {
 
     public void setSection(Section section) {
         this.section = section;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 }
