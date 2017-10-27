@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author rakib on 10/25/17
+ * @project ResearchDemo
+ */
 
 @Entity
 public class Course {

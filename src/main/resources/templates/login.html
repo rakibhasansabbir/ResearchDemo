@@ -6,11 +6,11 @@
 
 
 
-<form action="home" method="post" style="max-width:600px;" th:object="${cheese}">
+<form action="home" method="get" style="max-width:600px;" th:object="${cheese}">
 
     <!--add Name-->
     <div class="form-group">
-        <label th:for="name">ID or Initial</label>
+        <label th:for="name">Faculty Id</label>
         <input class="form-control"  name="id" />
         <span  class="error"></span>
     </div>

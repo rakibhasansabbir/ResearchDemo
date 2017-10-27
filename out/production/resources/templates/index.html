@@ -23,14 +23,14 @@
 <table class="table">
 
     <tr>
-        <th>Course Code</th>
         <th>Course Title</th>
+        <th>Section</th>
 
     </tr>
 
     <tr th:each="Course : ${List1}">
-        <td th:text="${Course.coursecode}"></td>
-        <td><a th:href="'/classmates?id=' + ${Course.id}" th:text="${Course.coursetitle}"></a></td>
+        <td th:text="${Course.getCourse().getCourseTitle()}"></td>
+        <td><a th:href="'/home?id=' + ${Course.id}" th:text="${Course.sectionId}"></a></td>
     </tr>
 
 </table>

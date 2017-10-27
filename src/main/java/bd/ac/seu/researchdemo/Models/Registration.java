@@ -1,7 +1,12 @@
 package bd.ac.seu.researchdemo.Models;
 
-
 import javax.persistence.*;
+
+/**
+ * @author rakib on 10/25/17
+ * @project ResearchDemo
+ */
+
 @Entity
 public class Registration {
 

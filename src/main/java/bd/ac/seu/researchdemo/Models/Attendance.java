@@ -5,7 +5,10 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+/**
+ * @author rakib on 10/25/17
+ * @project ResearchDemo
+ */
 
 @Entity
 public class Attendance {
