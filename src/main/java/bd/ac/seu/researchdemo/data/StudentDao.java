@@ -1,4 +1,4 @@
-package bd.ac.seu.researchdemo.Service;
+package bd.ac.seu.researchdemo.data;
 
 import bd.ac.seu.researchdemo.Models.Student;
 import org.springframework.data.repository.CrudRepository;

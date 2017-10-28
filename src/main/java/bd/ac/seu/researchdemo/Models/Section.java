@@ -24,11 +24,15 @@ public class Section {
     @ManyToOne
     @JoinColumn(name = "facultyId" )
     private Faculty faculty;
-    private int sectionId;
+    private int section;
 
     @OneToMany
     @JoinColumn(name = "sectionId" )
     private Set<Attendance> attendanceSet = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn(name = "sectionId")
+    private Set<Registration> registrationSet = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "semesterId")
@@ -38,11 +42,13 @@ public class Section {
     public Section() {
     }
 
-    public Section(int id, Course course, Faculty faculty, int sectionId) {
-        this.id = id;
+    public Section(Course course, Faculty faculty, int section, Set<Attendance> attendanceSet, Set<Registration> registrationSet, Semester semester) {
         this.course = course;
         this.faculty = faculty;
-        this.sectionId = sectionId;
+        this.section = section;
+        this.attendanceSet = attendanceSet;
+        this.registrationSet = registrationSet;
+        this.semester = semester;
     }
 
     public int getId() {
@@ -69,12 +75,12 @@ public class Section {
         this.faculty = faculty;
     }
 
-    public int getSectionId() {
-        return sectionId;
+    public int getSection() {
+        return section;
     }
 
-    public void setSectionId(int sectionId) {
-        this.sectionId = sectionId;
+    public void setSection(int section) {
+        this.section = section;
     }
 
     public Set<Attendance> getAttendanceSet() {
@@ -85,18 +91,19 @@ public class Section {
         this.attendanceSet = attendanceSet;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Section)) return false;
-
-        Section section = (Section) o;
-
-        if (id != section.id) return false;
-        if (sectionId != section.sectionId) return false;
-        if (course != null ? !course.equals(section.course) : section.course != null) return false;
-        if (faculty != null ? !faculty.equals(section.faculty) : section.faculty != null) return false;
-        return attendanceSet.equals(section.attendanceSet);
+    public Set<Registration> getRegistrationSet() {
+        return registrationSet;
     }
 
+    public void setRegistrationSet(Set<Registration> registrationSet) {
+        this.registrationSet = registrationSet;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
 }

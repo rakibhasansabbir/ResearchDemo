@@ -10,7 +10,7 @@
 
 <body class="container body-content">
 
-
+<nav th:replace="fragments :: navigation"></nav>
 <div th:replace="fragments :: dropdown" ></div>
 
 
@@ -29,8 +29,8 @@
     </tr>
 
     <tr th:each="Course : ${List1}">
-        <td th:text="${Course.getCourse().getCourseTitle()}"></td>
-        <td><a th:href="'/home?id=' + ${Course.id}" th:text="${Course.sectionId}"></a></td>
+        <td><a th:href="'/stream?ids=' + ${Course.id}" th:text="${Course.getCourse().getCourseTitle()}"></a></td>
+        <td th:text="${Course.section}"></td>
     </tr>
 
 </table>

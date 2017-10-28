@@ -1,7 +1,6 @@
-package bd.ac.seu.researchdemo.Service;
+package bd.ac.seu.researchdemo.data;
 
-
-import bd.ac.seu.researchdemo.Models.Faculty;
+import bd.ac.seu.researchdemo.Models.Attendance;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +8,5 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface FacultyDao extends CrudRepository<Faculty,Integer>{
+public interface AttendenceDao extends CrudRepository<Attendance,Integer> {
 }

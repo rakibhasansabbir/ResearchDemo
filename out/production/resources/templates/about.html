@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:h="http://www.w3.org/1999/xhtml">
 
 <head th:replace="fragments :: head">
 
@@ -92,9 +92,9 @@
 
 </p>
 
-<form action="attendance">
+<form action="attendance" >
     Attendance:
-    <input type="date" name="bday"/>
+    <input type="datetime-local" name="bday" />
     <input type="submit"/>
 </form>
 

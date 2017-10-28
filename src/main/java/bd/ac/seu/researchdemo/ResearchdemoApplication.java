@@ -1,23 +1,15 @@
 package bd.ac.seu.researchdemo;
 
-import bd.ac.seu.researchdemo.Models.Attendance;
-import bd.ac.seu.researchdemo.Models.Course;
-import bd.ac.seu.researchdemo.Models.Faculty;
-import bd.ac.seu.researchdemo.Models.Student;
-import bd.ac.seu.researchdemo.Service.AttendenceDao;
-import bd.ac.seu.researchdemo.Service.CourseDao;
-import bd.ac.seu.researchdemo.Service.FacultyDao;
-import bd.ac.seu.researchdemo.Service.StudentDao;
-import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import bd.ac.seu.researchdemo.data.AttendenceDao;
+import bd.ac.seu.researchdemo.data.CourseDao;
+import bd.ac.seu.researchdemo.data.FacultyDao;
+import bd.ac.seu.researchdemo.data.StudentDao;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class ResearchdemoApplication {

@@ -67,4 +67,14 @@ public class Registration {
     public void setSemester(Semester semester) {
         this.semester = semester;
     }
+
+    @Override
+    public String toString() {
+        return "Registration{" +
+                "id=" + id +
+                ", student=" + student +
+                ", section=" + section +
+                ", semester=" + semester +
+                '}';
+    }
 }
