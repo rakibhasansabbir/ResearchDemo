@@ -1,10 +1,7 @@
 package bd.ac.seu.researchdemo.Controller;
 
 import bd.ac.seu.researchdemo.Models.*;
-import bd.ac.seu.researchdemo.data.AttendenceDao;
-import bd.ac.seu.researchdemo.data.FacultyDao;
-import bd.ac.seu.researchdemo.data.RegistrationDao;
-import bd.ac.seu.researchdemo.data.SectionDao;
+import bd.ac.seu.researchdemo.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +22,19 @@ public class CourseController {
     RegistrationDao registrationDao;
 
     @Autowired
+    StudentDao studentDao;
+    @Autowired
+    SemesterDao semesterDao;
+
+    @Autowired
     AttendenceDao attendenceDao;
     String a;
+    String DTime;
+    Registration registration;
 
     List<Registration> registrationList;
     List<Section> sectionList;
-    int temId,Fid;
+    int secId,Fid;
 
     Faculty faculty;
     Section section;
@@ -63,7 +67,7 @@ public class CourseController {
     @RequestMapping(value = "stream",method = RequestMethod.GET)
     private String stream(Model model, @RequestParam int ids){
 
-        temId = ids;
+        secId = ids;
         model.addAttribute("title",faculty.getFacultyName());
         model.addAttribute("List1",sectionList);
         model.addAttribute("tempId",Fid);
@@ -80,7 +84,7 @@ public class CourseController {
 
     @RequestMapping(value = "classmates1")
     private String homeClassmate(Model model){
-        registrationList = registrationDao.findBySectionSection(temId);
+        registrationList = registrationDao.findBySectionId(secId);
         model.addAttribute("title",faculty.getFacultyName());
         model.addAttribute("List3",registrationList);
         model.addAttribute("List1",sectionList);
@@ -103,20 +107,8 @@ public class CourseController {
 
     @RequestMapping(value = "attendance",method = RequestMethod.GET)
     private String attendance(@ModelAttribute  @Valid Attendance attendance,
-                              Errors errors, Model model, @RequestParam int[] id){
-
-        for (int ids : id) {
-            Registration registration = registrationDao.findOne(ids);
-
-            Section section = sectionDao.findOne(registration.getSection().getId());
-            section.
-            attendance.setSection(section);
-            attendance.setAttendenceStatus(AttendenceStatus.PRESENT);
-            attendance.setAttendanceDetails(attendance.getAttendanceDetails());
-            attendance.setStudent();
-            attendenceDao.save(attendance);
-        }
-
+                              Errors errors, Model model, @RequestParam String bday){
+        DTime = bday;
         Registration registration;
 
         model.addAttribute("List6",registrationList);
@@ -128,9 +120,31 @@ public class CourseController {
     }
 
     @RequestMapping(value = "attendance",method = RequestMethod.POST)
-    private String getAttendance(Model model){
-        List<Attendance> attendanceList = attendenceDao.findBySectionId(temId);
+    private String getAttendance(@ModelAttribute  @Valid Attendance attendance,
+                                 Errors errors, Model model, @RequestParam int[] id){
+
+                for (int ids : id) {
+           registration = registrationDao.findOne(ids);
+           Student  student = studentDao.findOne(registration.getStudent().getStudentId());
+
+           registration.getSemester().getSemesterId();
+           Semester semester = semesterDao.findOne(registration.getSemester().getSemesterId());
+            Section section = sectionDao.findOne(registration.getSection().getId());
+            attendance.setSection(section);
+            attendance.setAttendenceStatus(AttendenceStatus.PRESENT);
+            attendance.setAttendanceDetails(attendance.getAttendanceDetails());
+            attendance.setStudent(student);
+            //attendance.setDateTime(DTime);
+            attendance.setType(attendance.getType());
+            attendance.setSemester(semester);
+            attendenceDao.save(attendance);
+
+        }
+
+        List<Attendance> attendanceList = attendenceDao.findBySectionId(secId);
         model.addAttribute("List6",attendanceList);
+        model.addAttribute("date",DTime);
+        model.addAttribute("title");
 
         return "attendanceStatus";
     }

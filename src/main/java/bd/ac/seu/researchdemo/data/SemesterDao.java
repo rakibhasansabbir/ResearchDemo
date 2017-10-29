@@ -1,15 +1,17 @@
 package bd.ac.seu.researchdemo.data;
 
-import bd.ac.seu.researchdemo.Models.Registration;
+import bd.ac.seu.researchdemo.Models.Semester;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
+
+/**
+ * @author rakib on 10/29/17
+ * @project ResearchDemo
+ */
 
 @Repository
 @Transactional
-public interface RegistrationDao extends CrudRepository<Registration,Integer> {
-    public List<Registration> findBySectionId(int id);
-
+public interface SemesterDao extends CrudRepository<Semester, Integer > {
 }
