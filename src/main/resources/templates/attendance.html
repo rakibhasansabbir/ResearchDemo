@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments :: head">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
    </head>
 
 <body>
+
 
 <nav th:replace="fragments :: navigation"></nav>
 <div th:replace="fragments :: dropdown" ></div>
@@ -15,20 +17,46 @@
 <h5 th:text="${title3}">Default Title</h5>
 </div>
 <div class="container">
-    <form method="post" style="max-width:600px;" th:object="${Attendance}">
-    <table class="table table-hover">
+    <form method="post" style="max-width:600px;" th:object="${attendance}">
+        <!--add type-->
+        <div class="form-group">
+            <label th:for="type">Attendance Type</label>
+            <select th:field="*{type}">
+                <option th:each="attendanceType: ${attendanceType}"
+                        th:text="${attendanceType.Type}"
+                        th:value="${attendanceType}"></option>
+
+            </select>
+        </div>
+
+        <!--add Details-->
+        <div class="form-group">
+            <label th:for="attendanceDetails">Details</label>
+            <input class="form-control" th:field="*{attendanceDetails}" />
+            <span th:errors="*{attendanceDetails}" class="error"></span>
+        </div>
+
+
+
+
+        <table class="table table-hover">
         <thead>
+
         <tr>
+            <th>Active</th>
             <th>ID</th>
             <th>Name</th>
-            <th>Active</th>
+            <th>Status</th>
+            <!--<th>Status</th>-->
         </tr>
         </thead>
         <tbody>
         <tr th:each="Student : ${List6}">
-            <td th:text="${Student.studentId}"></td>
-            <td th:text="${Student.studentName}"> </td>
-            <td><input type="checkbox" name="Ids" th:value="${Student.id}" th:id="${Student.id}"/></td>
+            <td><input type="checkbox" name="id" th:value="${Student.id}" th:id="${Student.id}"/></td>
+            <td th:text="${Student.getStudent().studentId}"></td>
+            <td th:text="${Student.getStudent().studentName}"> </td>
+            <!--<td th:text="${Student.getStudent().attendenceStatus}"></td>-->
+
 
         </tr>
 

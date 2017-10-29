@@ -37,14 +37,20 @@ public class Attendance {
     @JoinColumn(name = "semesterId")
     private Semester semester;
 
+    private String attendanceDetails;
+
     public Attendance() {
     }
 
-    public Attendance(Student student, Section section, Type type, LocalDateTime dateTime) {
+
+    public Attendance(Student student, Section section, Type type, AttendenceStatus attendenceStatus, LocalDateTime dateTime, Semester semester, String attendanceDetails) {
         this.student = student;
         this.section = section;
         this.type = type;
+        this.attendenceStatus = attendenceStatus;
         this.dateTime = dateTime;
+        this.semester = semester;
+        this.attendanceDetails = attendanceDetails;
     }
 
     public int getId() {
@@ -79,11 +85,35 @@ public class Attendance {
         this.type = type;
     }
 
+    public AttendenceStatus getAttendenceStatus() {
+        return attendenceStatus;
+    }
+
+    public void setAttendenceStatus(AttendenceStatus attendenceStatus) {
+        this.attendenceStatus = attendenceStatus;
+    }
+
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    public String getAttendanceDetails() {
+        return attendanceDetails;
+    }
+
+    public void setAttendanceDetails(String attendanceDetails) {
+        this.attendanceDetails = attendanceDetails;
     }
 }

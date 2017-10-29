@@ -12,4 +12,5 @@ import java.util.List;
 public interface SectionDao extends CrudRepository<Section,Integer> {
     List<Section> findByFacultyFacultyId(int fid);
 
+
 }

@@ -14,4 +14,8 @@ public enum Type {
     Type(String staus) {
         Type = staus;
     }
+
+    public String getType() {
+        return Type;
+    }
 }

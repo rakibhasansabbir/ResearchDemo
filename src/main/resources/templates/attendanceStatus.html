@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments :: head">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+<nav th:replace="fragments :: navigation"></nav>
+<div th:replace="fragments :: dropdown" ></div>
+<div class="container">
+    <h1 th:text="${title}">Default Title</h1>
+    <h3 th:text="${title1}">Default Title</h3>
+    <h5 th:text="${title3}">Default Title</h5>
+</div>
+<div class="container">
+    <form method="get" style="max-width:600px;" th:object="${attendance}" action="attendance">
+
+        <table class="table table-hover">
+            <thead>
+
+            <tr>
+                <th>Date And Time</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Details</th>
+                <th>Status</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="Student : ${List6}">
+                <td th:text="${Student.getDateTime()}"></td>
+                <td th:text="${Student.getStudent().studentId}"></td>
+                <td th:text="${Student.getStudent().studentName}"> </td>
+                <td th:text="${Student.getAttendanceDetails()}"> </td>
+                <td th:text="${Student.getAttendenceStatus()}"></td>
+
+
+            </tr>
+
+            </tbody>
+        </table>
+        <input type="submit" value="Edit" />
+
+    </form>
+</div>
+
+</body>
+</html>
