@@ -43,7 +43,8 @@ public class Attendance {
     }
 
 
-    public Attendance(Student student, Section section, Type type, AttendenceStatus attendenceStatus, LocalDateTime dateTime, Semester semester, String attendanceDetails) {
+    public Attendance(Student student, Section section, Type type, AttendenceStatus attendenceStatus,
+                      LocalDateTime dateTime, Semester semester, String attendanceDetails) {
         this.student = student;
         this.section = section;
         this.type = type;
