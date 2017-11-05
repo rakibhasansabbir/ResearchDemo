@@ -10,6 +10,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -114,9 +116,13 @@ public class CourseController {
 
     @RequestMapping(value = "attendance", method = RequestMethod.GET)
     private String attendance(@ModelAttribute @Valid Attendance attendance,
-                              Errors errors, Model model, @RequestParam Calendar dateTime) {
-
-
+                              Errors errors, Model model, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Calendar dateTime) {
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //System.out.println("Current TIme: "+ dateFormat.format(Calendar.getInstance().getTime()));
+        //System.out.println("Getting time without Format: " + dateTime.getTime());
+       // System.out.println("Getting time with Format: " + dateFormat.format(dateTime.getTime()));
+        System.out.println("IS  IT WORKING?");
         LDT = dateTime;
         Registration registration;
         model.addAttribute("List6", registrationList);
@@ -127,17 +133,55 @@ public class CourseController {
         return "attendance";
     }
 
+    //@RequestMapping(value = "attendanceTest", method = RequestMethod.GET)
+    //private String getAttendance() {
     @RequestMapping(value = "attendance", method = RequestMethod.POST)
     private String getAttendance(@ModelAttribute @Valid Attendance attendance,
                                  Errors errors, Model model, @RequestParam int[] id) {
+        /*
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("Current TIme: "+ dateFormat.format(Calendar.getInstance().getTime()));
+        //System.out.println("Getting time without Format: " + dateTime.getTime());
+        //System.out.println("Getting time with Format: " + dateFormat.format(dateTime.getTime()));
+        //System.out.println("LOUT IS  OK: " + LDT);
+        Student student = studentDao.findOne("2014100000018");
+        System.out.println("Student Get Done " + student.getStudentName());
+        Registration registration = registrationDao.findOne(1);
+        System.out.println("Registration Get Done " + registration.getId());
+        Section section = sectionDao.findOne(registration.getSection().getId());
+        System.out.println("Section Get Done " + section.getId());
+        Attendance attendance = new Attendance(student, section, Type.CLASS, AttendenceStatus.PRESENT,
+                Calendar.getInstance(), registration.getSemester());
+        System.out.println("Attendance Object Created");
+        attendenceDao.save(attendance);
+        System.out.println("Attendance Saved");
+        */
+/*
+        Attendance attendance = new Attendance();
+        attendance.setType(Type.Exam);
+        for (Registration registration : registrationList) {
+            registration = registrationDao.findOne(registration.getId());
+            Student student = studentDao.findOne(registration.getStudent().getStudentId());
+            registration.getSemester().getSemesterId();
+            Semester semester = semesterDao.findOne(registration.getSemester().getSemesterId());
+            Section section = sectionDao.findOne(registration.getSection().getId());
+            AttendenceStatus attendenceStatus = AttendenceStatus.PRESENT;
 
 
+            //if (attendance.getStudent().getStudentId() == null) {
+            attendenceDao.save(new Attendance(student, section,
+                    attendance.getType(), attendenceStatus,LDT, semester));
+            // }
+        }*///////////
 
+
+/*
         attendanceList = attendenceDao.findBySectionId(3);
         attendanceList.stream().filter(attendance1 -> attendance1.getSection().getId() == 3)
                 .map(attendance1 -> attendance1.getStudent().getStudentId())
                 .forEach(System.out::println);
-
+        Attendance attendance = new Attendance();
+        attendance.setType(Type.Exam);
         for (Registration registration : registrationList) {
             registration = registrationDao.findOne(registration.getId());
             Student student = studentDao.findOne(registration.getStudent().getStudentId());
@@ -156,7 +200,8 @@ public class CourseController {
         model.addAttribute("List6", attendanceList);
         model.addAttribute("date", LDT);
         model.addAttribute("title");
-
+        return "attendanceStatus";
+***********/
         return "attendanceStatus";
     }
 

@@ -34,6 +34,7 @@ public class Attendance {
 
 
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar dateTime;
 
     @ManyToOne
