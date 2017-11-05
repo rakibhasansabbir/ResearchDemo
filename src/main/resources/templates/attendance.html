@@ -29,39 +29,44 @@
             </select>
         </div>
 
-        <!--add Details-->
-        <div class="form-group">
-            <label th:for="attendanceDetails">Details</label>
-            <input class="form-control" th:field="*{attendanceDetails}" />
-            <span th:errors="*{attendanceDetails}" class="error"></span>
-        </div>
+        <!--&lt;!&ndash;add Details&ndash;&gt;-->
+        <!--<div class="form-group">-->
+            <!--<label th:for="attendanceDetails">Details</label>-->
+            <!--&lt;!&ndash;<input class="form-control" th:field="*{attendanceDetails}" />&ndash;&gt;-->
+            <!--<span th:errors="*{attendanceDetails}" class="error"></span>-->
+        <!--</div>-->
 
 
 
+        <div class="container">
 
         <table class="table table-hover">
         <thead>
 
         <tr>
-            <th>Active</th>
-            <th>ID</th>
+            <th>No.</th>
+            <th>Student ID</th>
             <th>Name</th>
-            <th>Status</th>
+            <th>Lecture Attended</th>
+            <th>Consecutive Missing</th>
+            <th>Attendance</th>
+
             <!--<th>Status</th>-->
         </tr>
         </thead>
         <tbody>
         <tr th:each="Student : ${List6}">
-            <td><input type="checkbox" name="id" th:value="${Student.id}" th:id="${Student.id}"/></td>
+            <td class=""></td>
             <td th:text="${Student.getStudent().studentId}"></td>
+            <td th:text="A"> </td>
+            <td th:text="p"> </td>
             <td th:text="${Student.getStudent().studentName}"> </td>
-            <!--<td th:text="${Student.getStudent().attendenceStatus}"></td>-->
-
+            <td><input type="checkbox" name="id" th:value="${Student.id}" th:id="${Student.id}"/></td>
 
         </tr>
-
         </tbody>
     </table>
+        </div>
         <input type="submit" value="Save" />
 
     </form>

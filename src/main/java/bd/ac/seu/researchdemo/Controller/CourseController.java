@@ -1,8 +1,9 @@
 package bd.ac.seu.researchdemo.Controller;
 
 import bd.ac.seu.researchdemo.Models.*;
-import bd.ac.seu.researchdemo.data.*;
+import bd.ac.seu.researchdemo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -29,17 +32,20 @@ public class CourseController {
 
     @Autowired
     AttendenceDao attendenceDao;
-    String DTime;
+
     Registration registration;
 
     List<Registration> registrationList;
     List<Section> sectionList;
+    List<Attendance> attendanceList;
     int secId, Fid;
     int i = 0;
 
+//    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+    private Calendar LDT;
+
     Faculty faculty;
     Section section;
-    LocalDateTime localDateTime;
 
     @RequestMapping(value = "/")
     public String login() {
@@ -86,6 +92,7 @@ public class CourseController {
     @RequestMapping(value = "classmates1")
     private String homeClassmate(Model model) {
 
+
         registrationList = registrationDao.findBySectionId(secId);
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List3", registrationList);
@@ -97,9 +104,7 @@ public class CourseController {
     @RequestMapping(value = "about")
     private String homeAbout(Model model) {
 
-        LocalDateTime dateTime = LocalDateTime.now();
-
-        model.addAttribute("dateTime", dateTime);
+        model.addAttribute("dateTime",LocalDateTime.now());
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
@@ -109,10 +114,11 @@ public class CourseController {
 
     @RequestMapping(value = "attendance", method = RequestMethod.GET)
     private String attendance(@ModelAttribute @Valid Attendance attendance,
-                              Errors errors, Model model, @RequestParam String bday) {
-        DTime = bday;
-        Registration registration;
+                              Errors errors, Model model, @RequestParam Calendar dateTime) {
 
+
+        LDT = dateTime;
+        Registration registration;
         model.addAttribute("List6", registrationList);
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
@@ -125,32 +131,30 @@ public class CourseController {
     private String getAttendance(@ModelAttribute @Valid Attendance attendance,
                                  Errors errors, Model model, @RequestParam int[] id) {
 
-        AttendenceStatus attendenceStatus = null;
+
+
+        attendanceList = attendenceDao.findBySectionId(3);
+        attendanceList.stream().filter(attendance1 -> attendance1.getSection().getId() == 3)
+                .map(attendance1 -> attendance1.getStudent().getStudentId())
+                .forEach(System.out::println);
+
         for (Registration registration : registrationList) {
             registration = registrationDao.findOne(registration.getId());
             Student student = studentDao.findOne(registration.getStudent().getStudentId());
-            localDateTime = LocalDateTime.now();
             registration.getSemester().getSemesterId();
             Semester semester = semesterDao.findOne(registration.getSemester().getSemesterId());
             Section section = sectionDao.findOne(registration.getSection().getId());
+            AttendenceStatus attendenceStatus = AttendenceStatus.PRESENT;
 
-            List<Attendance> attendanceList = attendenceDao
-                    .findByDateTimeAndStudentStudentIdAndAttendanceDetails
-                            (localDateTime, student, attendance.getAttendanceDetails());
-            for (Attendance attendance1 : attendanceList) {
-                if (attendance1.getStudent().getStudentId()
-                        != attendance.getStudent().getStudentId()) {
-                    attendenceStatus = AttendenceStatus.PRESENT;
-                    attendenceDao.save(new Attendance(student, section, attendance.getType(),
-                            attendenceStatus,
-                            localDateTime, semester, attendance.getAttendanceDetails()));
-                }
-            }
 
+            //if (attendance.getStudent().getStudentId() == null) {
+                attendenceDao.save(new Attendance(student, section,
+                        attendance.getType(), attendenceStatus,LDT, semester));
+           // }
         }
         List<Attendance> attendanceList = attendenceDao.findBySectionId(secId);
         model.addAttribute("List6", attendanceList);
-        model.addAttribute("date", DTime);
+        model.addAttribute("date", LDT);
         model.addAttribute("title");
 
         return "attendanceStatus";

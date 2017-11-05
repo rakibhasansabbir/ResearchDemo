@@ -1,9 +1,9 @@
 package bd.ac.seu.researchdemo;
 
-import bd.ac.seu.researchdemo.data.AttendenceDao;
-import bd.ac.seu.researchdemo.data.CourseDao;
-import bd.ac.seu.researchdemo.data.FacultyDao;
-import bd.ac.seu.researchdemo.data.StudentDao;
+import bd.ac.seu.researchdemo.repository.AttendenceDao;
+import bd.ac.seu.researchdemo.repository.CourseDao;
+import bd.ac.seu.researchdemo.repository.FacultyDao;
+import bd.ac.seu.researchdemo.repository.StudentDao;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

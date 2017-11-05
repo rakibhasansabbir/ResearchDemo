@@ -1,9 +1,12 @@
 package bd.ac.seu.researchdemo.Models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 /**
  * @author rakib on 10/25/17
@@ -30,28 +33,24 @@ public class Attendance {
     private  AttendenceStatus attendenceStatus;
 
 
-    @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
-    private LocalDateTime dateTime = LocalDateTime.now();
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dateTime;
 
     @ManyToOne
     @JoinColumn(name = "semesterId")
     private Semester semester;
 
-    private String attendanceDetails;
 
     public Attendance() {
     }
 
-
-    public Attendance(Student student, Section section, Type type, AttendenceStatus attendenceStatus,
-                      LocalDateTime dateTime, Semester semester, String attendanceDetails) {
+    public Attendance(Student student, Section section, Type type, AttendenceStatus attendenceStatus, Calendar dateTime, Semester semester) {
         this.student = student;
         this.section = section;
         this.type = type;
         this.attendenceStatus = attendenceStatus;
         this.dateTime = dateTime;
         this.semester = semester;
-        this.attendanceDetails = attendanceDetails;
     }
 
     public int getId() {
@@ -94,11 +93,11 @@ public class Attendance {
         this.attendenceStatus = attendenceStatus;
     }
 
-    public LocalDateTime getDateTime() {
+    public Calendar getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(Calendar dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -108,13 +107,5 @@ public class Attendance {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
-    }
-
-    public String getAttendanceDetails() {
-        return attendanceDetails;
-    }
-
-    public void setAttendanceDetails(String attendanceDetails) {
-        this.attendanceDetails = attendanceDetails;
     }
 }
