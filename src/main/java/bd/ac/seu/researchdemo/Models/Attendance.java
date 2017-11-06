@@ -1,6 +1,5 @@
 package bd.ac.seu.researchdemo.Models;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,9 +32,8 @@ public class Attendance {
     private  AttendenceStatus attendenceStatus;
 
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar dateTime;
+    @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
+    private LocalDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "semesterId")
@@ -45,7 +43,8 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(Student student, Section section, Type type, AttendenceStatus attendenceStatus, Calendar dateTime, Semester semester) {
+    public Attendance(Student student, Section section, Type type, AttendenceStatus attendenceStatus,
+                      LocalDateTime dateTime, Semester semester) {
         this.student = student;
         this.section = section;
         this.type = type;
@@ -94,11 +93,11 @@ public class Attendance {
         this.attendenceStatus = attendenceStatus;
     }
 
-    public Calendar getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Calendar dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 

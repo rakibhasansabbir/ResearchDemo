@@ -11,6 +11,7 @@ import java.util.List;
 @Transactional
 public interface AttendenceDao extends CrudRepository<Attendance,Integer> {
     public List<Attendance> findBySectionId(int id);
-    public List<Attendance> findByStudentStudentId(String studentId);
+    public List<Attendance> findByAttendenceStatusAndSection_IdAndStudentStudentId(String attendendenceStatus,int sectionId,String studentId);
+    public List<Attendance> findBySectionIdAndStudentStudentId(int secId,String studentId);
 
 }
