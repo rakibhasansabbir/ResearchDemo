@@ -55,13 +55,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="Student : ${List6}">
-            <td class=""></td>
-            <td th:text="${Student.getStudent().studentId}"></td>
-            <td th:text="A"> </td>
-            <td th:text="p"> </td>
-            <td th:text="${Student.getStudent().studentName}"> </td>
-            <td><input type="checkbox" name="id" th:value="${Student.id}" th:id="${Student.id}"/></td>
+        <tr th:each="attendenceList : ${AttendenceList}">
+            <td th:text="${attendenceList.getId()}"></td>
+            <td th:text="${attendenceList.getStudentId()}"></td>
+            <td th:text="${attendenceList.getStudentName()}"> </td>
+            <td th:text="${attendenceList.getTotalPresent()}"> </td>
+            <td th:text="${attendenceList.getTotalAbsent()}"> </td>
+            <td><input type="checkbox" name="id" th:value="${attendenceList.getStudentId()}" th:id="${attendenceList.getStudentId()}"/></td>
 
         </tr>
         </tbody>

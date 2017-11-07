@@ -1,6 +1,7 @@
 package bd.ac.seu.researchdemo.repository;
 
 import bd.ac.seu.researchdemo.Models.Attendance;
+import bd.ac.seu.researchdemo.Models.AttendenceStatus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Transactional
 public interface AttendenceDao extends CrudRepository<Attendance,Integer> {
     public List<Attendance> findBySectionId(int id);
-    public List<Attendance> findByAttendenceStatusAndSection_IdAndStudentStudentId(String attendendenceStatus,int sectionId,String studentId);
+    public List<Attendance> findByAttendenceStatusAndSection_IdAndStudentStudentId(AttendenceStatus attendendenceStatus, int sectionId, String studentId);
     public List<Attendance> findBySectionIdAndStudentStudentId(int secId,String studentId);
 
 }

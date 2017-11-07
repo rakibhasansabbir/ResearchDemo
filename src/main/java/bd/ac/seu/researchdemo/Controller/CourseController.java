@@ -2,6 +2,7 @@ package bd.ac.seu.researchdemo.Controller;
 
 import bd.ac.seu.researchdemo.Models.*;
 import bd.ac.seu.researchdemo.repository.*;
+import bd.ac.seu.researchdemo.service.AttendenceService;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
@@ -39,7 +40,7 @@ public class CourseController {
     @Autowired
     AttendenceDao attendenceDao;
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.S")
+
 
     LocalDateTime DTime;
     Registration registration;
@@ -47,8 +48,9 @@ public class CourseController {
     List<Registration> registrationList;
     List<Section> sectionList;
     ArrayList<String> stringArrayList;
+
     int secId, Fid;
-    int i = 0;
+
 
     Faculty faculty;
     Section section;
@@ -128,10 +130,33 @@ public class CourseController {
                               Errors errors, Model model,
                               @RequestParam
                                   @DateTimeFormat(pattern = "yyyy-MM-dd") String dateTime) {
-
+        List<AttendenceService> attendenceServiceList = new ArrayList<>();
+        int count = 1;
         DTime = LocalDateTime.parse(dateTime);
+        for (Registration registration : registrationList){
+            //total attendence for present
+            List<Attendance> attendanceList1 = attendenceDao.
+                    findByAttendenceStatusAndSection_IdAndStudentStudentId
+                            (AttendenceStatus.PRESENT,secId,registration.getStudent().getStudentId());
+            int totalpresent = attendanceList1.size();
 
-        model.addAttribute("List6", registrationList);
+            //total attendence for absent
+            attendanceList1 = attendenceDao.
+                    findByAttendenceStatusAndSection_IdAndStudentStudentId
+                            (AttendenceStatus.ABSENT,secId,registration.getStudent().getStudentId());
+            int totalabsent = attendanceList1.size();
+
+            attendenceServiceList.add(new AttendenceService
+                    (count,registration.getStudent().getStudentId(),
+                            registration.getStudent().getStudentName(),
+                            totalpresent,totalabsent,registration.getSection().getId(),
+                            registration.getSemester().getSemesterId()));
+
+            count++;
+        }
+
+
+        model.addAttribute("AttendenceList", attendenceServiceList);
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute(new Attendance());
@@ -141,14 +166,15 @@ public class CourseController {
 
     @RequestMapping(value = "attendance", method = RequestMethod.POST)
     private String getAttendance(@ModelAttribute @Valid Attendance attendance,
-                                 Errors errors, Model model, @RequestParam int[] id) {
+                                 Errors errors, Model model, @RequestParam String[] id) {
+
         List<Attendance> attendanceList;
         String str = String.valueOf(DTime);
-        stringArrayList = new ArrayList<>();
-
-
         String first_word = str.split("T")[0];
 
+
+
+        int i;
         for (Registration registration : registrationList) {
             registration = registrationDao.findOne(registration.getId());
             student = studentDao.findOne(registration.getStudent().getStudentId());
@@ -156,7 +182,20 @@ public class CourseController {
             semester = semesterDao.findOne(registration.getSemester().getSemesterId());
             section = sectionDao.findOne(registration.getSection().getId());
             attendanceList = new ArrayList<>();
-            attendenceStatus = AttendenceStatus.PRESENT;
+
+            for (i=0;i<id.length;i++){
+                if(registration.getStudent().getStudentId() == id[i]){
+                    attendenceStatus = AttendenceStatus.PRESENT;
+                }
+                else {
+                    attendenceStatus = AttendenceStatus.ABSENT;
+
+                    System.out.println("Form param : " + id[i]);        }
+            }
+
+            System.out.println("Form registration : " + registration.getStudent().getStudentId());
+
+
 
             attendenceDao.save(new Attendance(student, section,
                     attendance.getType(),
