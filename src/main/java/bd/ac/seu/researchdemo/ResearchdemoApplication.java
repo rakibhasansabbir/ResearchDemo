@@ -1,5 +1,8 @@
 package bd.ac.seu.researchdemo;
 
+import bd.ac.seu.researchdemo.Models.Course;
+import bd.ac.seu.researchdemo.Models.Faculty;
+import bd.ac.seu.researchdemo.Models.Student;
 import bd.ac.seu.researchdemo.repository.AttendenceDao;
 import bd.ac.seu.researchdemo.repository.CourseDao;
 import bd.ac.seu.researchdemo.repository.FacultyDao;
@@ -18,8 +21,8 @@ public class ResearchdemoApplication {
 
 	@Bean
 	public CommandLineRunner demo(CourseDao courseDao, StudentDao studentDao, FacultyDao facultyDao,AttendenceDao attendenceDao) {
-		return (args) -> {
-//			 save a couple of customers
+		return (String... args) -> {
+
 //			courseDao.save(new Course("CSE4047", "Advance Java",3));
 //			courseDao.save(new Course("CSE4048","Advace Java Lab",1));
 //			courseDao.save(new Course("CSE1011","Programming Language I",3));

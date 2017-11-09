@@ -43,13 +43,16 @@ public class CourseController {
 
 
     LocalDateTime DTime;
+    String getDateTime;
     Registration registration;
 
     List<Registration> registrationList;
     List<Section> sectionList;
     ArrayList<String> stringArrayList;
 
+
     int secId, Fid;
+    int k = 0;
 
 
     Faculty faculty;
@@ -114,9 +117,6 @@ public class CourseController {
 
     @RequestMapping(value = "about")
     private String homeAbout(Model model) {
-
-        // LocalDateTime dateTime = LocalDateTime.now();
-
         model.addAttribute("localDateTime", LocalDateTime.now());
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
@@ -133,14 +133,18 @@ public class CourseController {
         List<AttendenceService> attendenceServiceList = new ArrayList<>();
         int count = 1;
         DTime = LocalDateTime.parse(dateTime);
+        getDateTime = dateTime;
+
+
         for (Registration registration : registrationList){
-            //total attendence for present
+
+            //Total present
             List<Attendance> attendanceList1 = attendenceDao.
                     findByAttendenceStatusAndSection_IdAndStudentStudentId
                             (AttendenceStatus.PRESENT,secId,registration.getStudent().getStudentId());
             int totalpresent = attendanceList1.size();
 
-            //total attendence for absent
+            //Total Absent
             attendanceList1 = attendenceDao.
                     findByAttendenceStatusAndSection_IdAndStudentStudentId
                             (AttendenceStatus.ABSENT,secId,registration.getStudent().getStudentId());
@@ -169,8 +173,10 @@ public class CourseController {
                                  Errors errors, Model model, @RequestParam String[] id) {
 
         List<Attendance> attendanceList;
-        String str = String.valueOf(DTime);
-        String first_word = str.split("T")[0];
+        String currentDateTime = String.valueOf(LocalDateTime.now());
+        String splitCurrentDate = currentDateTime.split("T")[0];
+        String splitGetDate = getDateTime.split("T")[0];
+        List<Attendance> attendanceList1 = (List<Attendance>) attendenceDao.findAll();
 
 
 
@@ -181,27 +187,63 @@ public class CourseController {
             registration.getSemester().getSemesterId();
             semester = semesterDao.findOne(registration.getSemester().getSemesterId());
             section = sectionDao.findOne(registration.getSection().getId());
-            attendanceList = new ArrayList<>();
 
-            for (i=0;i<id.length;i++){
-                if(registration.getStudent().getStudentId() == id[i]){
+            for (i = 0; i < id.length; i++) {
+                if (registration.getStudent().getStudentId().equals(id[i])) {
                     attendenceStatus = AttendenceStatus.PRESENT;
-                }
-                else {
+                    break;
+                } else {
                     attendenceStatus = AttendenceStatus.ABSENT;
 
-                    System.out.println("Form param : " + id[i]);        }
+                }
             }
-
-            System.out.println("Form registration : " + registration.getStudent().getStudentId());
-
-
-
-            attendenceDao.save(new Attendance(student, section,
+            if (attendanceList1.size() == 0){
+                attendenceDao.save(new Attendance(student, section,
                     attendance.getType(),
                     attendenceStatus,
                     DTime, semester));
+
+            }else {
+                for (int j = 0; j<1; j++){
+
+                    Attendance attendance1 = attendanceList1.get(k);
+                    k++;
+                    if (attendanceList1.size() == k){
+                        k =0;
+                    }
+
+                    String DateTime = String.valueOf(attendance1.getDateTime());
+                    String splitDate = DateTime.split("T")[0];
+                    int sectionId = attendance1.getSection().getId();
+                    String studentId = attendance1.getStudent().getStudentId();
+
+                    int sectionReg = registration.getSection().getId();
+                    String studentReg = registration.getStudent().getStudentId();
+                    if (splitDate.equals(splitGetDate)
+                            && sectionId == sectionReg
+                            && studentId.equals(studentReg)){
+
+                        System.out.println("Already Insert");
+
+
+
+                    }else {
+                        attendenceDao.save(new Attendance(student, section,
+                                attendance.getType(),
+                                attendenceStatus,
+                                DTime, semester));
+                    }
+                }
+
+            }
+
         }
+
+
+
+
+
+
         attendanceList = attendenceDao.findBySectionId(secId);
         attendanceList.stream().forEach(System.out::println);
         model.addAttribute("List6", attendanceList);
