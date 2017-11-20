@@ -3,23 +3,21 @@ package bd.ac.seu.researchdemo.Controller;
 import bd.ac.seu.researchdemo.Models.*;
 import bd.ac.seu.researchdemo.repository.*;
 import bd.ac.seu.researchdemo.service.AttendenceService;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.Convert;
 import javax.validation.Valid;
-import java.time.LocalDate;
+import java.io.File;
+import java.sql.Blob;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -31,7 +29,8 @@ public class CourseController {
     SectionDao sectionDao;
     @Autowired
     RegistrationDao registrationDao;
-
+    @Autowired
+    ClassAnnouncementsDao classAnnouncementsDao;
     @Autowired
     StudentDao studentDao;
     @Autowired
@@ -39,7 +38,6 @@ public class CourseController {
 
     @Autowired
     AttendenceDao attendenceDao;
-
 
 
     LocalDateTime DTime;
@@ -52,6 +50,7 @@ public class CourseController {
 
 
     int secId, Fid;
+    int count = 0;
     int k = 0;
 
 
@@ -90,17 +89,36 @@ public class CourseController {
     private String stream(Model model, @RequestParam int ids) {
 
         secId = ids;
+
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute(new ClassAnnouncements());
         return "stream";
     }
 
-    @RequestMapping(value = "stream1")
-    private String homeStream(Model model) {
+    @RequestMapping(value = "stream",method = RequestMethod.POST)
+    private String homeStream(@ModelAttribute @Valid ClassAnnouncements
+                                          announcements,Model model) {
+
+        String status = announcements.getAnnouncements();
+        File file = announcements.getFile();
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+
+        classAnnouncementsDao.save(new ClassAnnouncements(status,file,
+                LocalDateTime.now(),sectionDao.findOne(secId)));
+        return "stream";
+    }
+
+    @RequestMapping(value = "stream1",method = RequestMethod.GET)
+    private String headerStream(@ModelAttribute @Valid ClassAnnouncements
+                                            announcements,Model model) {
+        model.addAttribute("title", faculty.getFacultyName());
+        model.addAttribute("List1", sectionList);
+        model.addAttribute("tempId", Fid);
+
         return "stream";
     }
 
@@ -129,36 +147,35 @@ public class CourseController {
     private String attendance(@ModelAttribute @Valid Attendance attendance,
                               Errors errors, Model model,
                               @RequestParam
-                                  @DateTimeFormat(pattern = "yyyy-MM-dd") String dateTime) {
+                              @DateTimeFormat(pattern = "yyyy-MM-dd") String dateTime) {
         List<AttendenceService> attendenceServiceList = new ArrayList<>();
         int count = 1;
         DTime = LocalDateTime.parse(dateTime);
         getDateTime = dateTime;
 
 
-        for (Registration registration : registrationList){
+        for (Registration registration : registrationList) {
 
             //Total present
             List<Attendance> attendanceList1 = attendenceDao.
                     findByAttendenceStatusAndSection_IdAndStudentStudentId
-                            (AttendenceStatus.PRESENT,secId,registration.getStudent().getStudentId());
+                            (AttendenceStatus.PRESENT, secId, registration.getStudent().getStudentId());
             int totalpresent = attendanceList1.size();
 
             //Total Absent
             attendanceList1 = attendenceDao.
                     findByAttendenceStatusAndSection_IdAndStudentStudentId
-                            (AttendenceStatus.ABSENT,secId,registration.getStudent().getStudentId());
+                            (AttendenceStatus.ABSENT, secId, registration.getStudent().getStudentId());
             int totalabsent = attendanceList1.size();
 
             attendenceServiceList.add(new AttendenceService
-                    (count,registration.getStudent().getStudentId(),
+                    (count, registration.getStudent().getStudentId(),
                             registration.getStudent().getStudentName(),
-                            totalpresent,totalabsent,registration.getSection().getId(),
+                            totalpresent, totalabsent, registration.getSection().getId(),
                             registration.getSemester().getSemesterId()));
 
             count++;
         }
-
 
         model.addAttribute("AttendenceList", attendenceServiceList);
         model.addAttribute("List1", sectionList);
@@ -167,6 +184,7 @@ public class CourseController {
         model.addAttribute("attendanceType", Type.values());
         return "attendance";
     }
+
 
     @RequestMapping(value = "attendance", method = RequestMethod.POST)
     private String getAttendance(@ModelAttribute @Valid Attendance attendance,
@@ -177,7 +195,6 @@ public class CourseController {
         String splitCurrentDate = currentDateTime.split("T")[0];
         String splitGetDate = getDateTime.split("T")[0];
         List<Attendance> attendanceList1 = (List<Attendance>) attendenceDao.findAll();
-
 
 
         int i;
@@ -197,21 +214,19 @@ public class CourseController {
 
                 }
             }
-            if (attendanceList1.size() == 0){
+
+            //check attendance table empty or not
+            if (attendanceList1.size() == 0) {
                 attendenceDao.save(new Attendance(student, section,
-                    attendance.getType(),
-                    attendenceStatus,
-                    DTime, semester));
+                        attendance.getType(),
+                        attendenceStatus,
+                        DTime, semester));
 
-            }else {
-                for (int j = 0; j<1; j++){
+            } else {
+                for (int j = 0, falsecount = 0; j < attendanceList1.size(); j++) {
+                    Attendance attendance1 = attendanceList1.get(j);
 
-                    Attendance attendance1 = attendanceList1.get(k);
-                    k++;
-                    if (attendanceList1.size() == k){
-                        k =0;
-                    }
-
+                    //get all from attendance table
                     String DateTime = String.valueOf(attendance1.getDateTime());
                     String splitDate = DateTime.split("T")[0];
                     int sectionId = attendance1.getSection().getId();
@@ -219,19 +234,21 @@ public class CourseController {
 
                     int sectionReg = registration.getSection().getId();
                     String studentReg = registration.getStudent().getStudentId();
-                    if (splitDate.equals(splitGetDate)
-                            && sectionId == sectionReg
-                            && studentId.equals(studentReg)){
+
+                    //check same date repetation or not
+                    if (sectionId == sectionReg && splitDate.equals(splitGetDate)
+                            && studentId.equals(studentReg)) {
 
                         System.out.println("Already Insert");
 
-
-
-                    }else {
-                        attendenceDao.save(new Attendance(student, section,
-                                attendance.getType(),
-                                attendenceStatus,
-                                DTime, semester));
+                    } else {
+                        falsecount++;
+                        if (falsecount == attendanceList1.size()) {
+                            attendenceDao.save(new Attendance(student, section,
+                                    attendance.getType(),
+                                    attendenceStatus,
+                                    DTime, semester));
+                        }
                     }
                 }
 
@@ -240,16 +257,12 @@ public class CourseController {
         }
 
 
-
-
-
-
         attendanceList = attendenceDao.findBySectionId(secId);
         attendanceList.stream().forEach(System.out::println);
         model.addAttribute("List6", attendanceList);
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
-        model.addAttribute("title","Attendence for " + section.getCourse().getCourseTitle());
+        model.addAttribute("title", "Attendence for " + section.getCourse().getCourseTitle());
 
         return "attendanceStatus";
     }

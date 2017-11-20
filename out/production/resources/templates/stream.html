@@ -14,9 +14,16 @@
 
 
 <p>Classroom is a free web service for schools, non-profits, and anyone with a personal Google Account. Classroom makes it easy for learners and instructors to connect—inside and outside of schools.
-
-
 </p>
+
+<div class="form-group">
+    <form method="post" th:object="${classAnnouncements}" >
+    <label>Post:</label>
+    <textarea class="form-control" th:field="*{announcements}" ></textarea>
+    <input type="file" th:field="*{file}" />
+        <input type="submit" value="POST"/>
+    </form>
+</div>
 
 </body>
 </html>

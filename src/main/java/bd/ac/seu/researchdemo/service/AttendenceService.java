@@ -1,5 +1,7 @@
 package bd.ac.seu.researchdemo.service;
 
+import bd.ac.seu.researchdemo.Models.Attendance;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class AttendenceService {
         this.sectionId = sectionId;
         this.semesterId = semesterId;
     }
+
 
     public int getId() {
         return id;
