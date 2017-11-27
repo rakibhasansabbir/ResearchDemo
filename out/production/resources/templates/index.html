@@ -28,7 +28,7 @@
 
     </tr>
 
-    <tr th:each="Course : ${List1}">
+    <tr th:each="Course : ${sectionList}">
         <td><a th:href="'/stream?ids=' + ${Course.id}" th:text="${Course.getCourse().getCourseTitle()}"></a></td>
         <td th:text="${Course.section}"></td>
     </tr>

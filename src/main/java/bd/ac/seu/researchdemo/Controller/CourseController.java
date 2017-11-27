@@ -56,6 +56,7 @@ public class CourseController {
 
     Faculty faculty;
     Section section;
+    Section courseName;
     Semester semester;
     Student student;
     LocalDateTime localDateTime;
@@ -75,8 +76,9 @@ public class CourseController {
         List<Faculty> facultyList = facultyDao.findByFacultyId(id);
         sectionList = sectionDao.findByFacultyFacultyId(id);
         if (facultyList.size() > 0) {
-            model.addAttribute("title", faculty.getFacultyName());
-            model.addAttribute("List1", sectionList);
+            model.addAttribute("title", faculty.getFacultyName()
+            + " all courses");
+            model.addAttribute("sectionList", sectionList);
             model.addAttribute("tempId", Fid);
 
         } else {
@@ -89,10 +91,14 @@ public class CourseController {
     private String stream(Model model, @RequestParam int ids) {
 
         secId = ids;
+        registrationList = registrationDao.findBySectionId(secId);
+        courseName = sectionDao.findOne(ids);
 
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("courseTitle",
+                courseName.getCourse().getCourseTitle());
         model.addAttribute(new ClassAnnouncements());
         return "stream";
     }
@@ -106,6 +112,8 @@ public class CourseController {
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("courseTitle",
+                courseName.getCourse().getCourseTitle());
 
         classAnnouncementsDao.save(new ClassAnnouncements(status,file,
                 LocalDateTime.now(),sectionDao.findOne(secId)));
@@ -118,6 +126,8 @@ public class CourseController {
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("courseTitle",
+                courseName.getCourse().getCourseTitle());
 
         return "stream";
     }
@@ -125,11 +135,13 @@ public class CourseController {
     @RequestMapping(value = "classmates1")
     private String homeClassmate(Model model) {
 
-        registrationList = registrationDao.findBySectionId(secId);
+
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List3", registrationList);
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("courseTitle",
+                courseName.getCourse().getCourseTitle());
         return "classmates";
     }
 
@@ -139,6 +151,8 @@ public class CourseController {
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("courseTitle",
+                courseName.getCourse().getCourseTitle());
         return "about";
     }
 
@@ -182,6 +196,8 @@ public class CourseController {
         model.addAttribute("tempId", Fid);
         model.addAttribute(new Attendance());
         model.addAttribute("attendanceType", Type.values());
+        model.addAttribute("courseTitle",
+                courseName.getCourse().getCourseTitle());
         return "attendance";
     }
 
@@ -262,7 +278,11 @@ public class CourseController {
         model.addAttribute("List6", attendanceList);
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
-        model.addAttribute("title", "Attendence for " + section.getCourse().getCourseTitle());
+        model.addAttribute("courseTitle",
+                courseName.getCourse().getCourseTitle());
+        model.addAttribute("attendenceTitle",
+                "Attendence for " + section.getCourse().getCourseTitle()
+                + " section " + secId);
 
         return "attendanceStatus";
     }
