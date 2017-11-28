@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments :: head">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
 <body class="container body-content">
-
 
 <nav th:replace="fragments :: navigation"></nav>
 <div th:replace="fragments :: dropdown" ></div>
@@ -15,38 +17,50 @@
     <h1 th:text="${attendenceTitle}">Default Title</h1>
     <h3 th:text="${title1}">Default Title</h3>
     <h5 th:text="${title3}">Default Title</h5>
+
 </div>
+
+
 <div class="container">
-    <form method="get"  th:object="${attendance}" th:action="attendance" >
-                                                          <!--"'attendance?bday=' + $(date}"-->
 
-        <table class="table table-hover">
-            <thead>
+    <input class="form-control" id="myInput" type="text" placeholder="Search.."/>
+    <br/>
+    <table class="table table-bordered table-striped">
+        <thead>
 
-            <tr>
-                <th>Date And Time</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Status</th>
+        <tr>
+            <th>Date And Time</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
 
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="Student : ${List6}">
-                <td th:text="${Student.getDateTime()}"></td>
-                <td th:text="${Student.getStudent().studentId}"></td>
-                <td th:text="${Student.getStudent().studentName}"> </td>
-                <td th:text="${Student.getAttendenceStatus()}"></td>
+        </tr>
+        </thead>
+        <tbody id="myTable">
+        <tr th:each="Student : ${List6}">
+            <td th:text="${Student.getDateTime()}"></td>
+            <td th:text="${Student.getStudent().studentId}"></td>
+            <td th:text="${Student.getStudent().studentName}"> </td>
+            <td th:text="${Student.getAttendenceStatus()}"></td>
+        </tr>
 
+        </tbody>
+    </table>
 
-            </tr>
-
-            </tbody>
-        </table>
-        <input type="submit" value="Edit" name="bday"/>
-
-    </form>
 </div>
+
+
+
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

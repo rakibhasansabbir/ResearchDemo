@@ -97,6 +97,7 @@ public class CourseController {
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("post", "POST");
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute(new ClassAnnouncements());
@@ -126,6 +127,7 @@ public class CourseController {
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("post", "POST");
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
 
@@ -151,6 +153,7 @@ public class CourseController {
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
+        model.addAttribute("post", "POST");
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         return "about";
