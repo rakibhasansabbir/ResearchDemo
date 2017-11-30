@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-
 public class CourseController {
     @Autowired
     FacultyDao facultyDao;
@@ -35,25 +34,16 @@ public class CourseController {
     StudentDao studentDao;
     @Autowired
     SemesterDao semesterDao;
-
     @Autowired
     AttendenceDao attendenceDao;
 
-
     LocalDateTime DTime;
     String getDateTime;
-    Registration registration;
 
     List<Registration> registrationList;
     List<Section> sectionList;
-    ArrayList<String> stringArrayList;
-
 
     int secId, Fid;
-    int count = 0;
-    int k = 0;
-
-
     Faculty faculty;
     Section section;
     Section courseName;
@@ -67,7 +57,6 @@ public class CourseController {
         return "login";
     }
 
-
     @RequestMapping(value = "home", method = RequestMethod.GET)
     private String home(Model model, @RequestParam int id) {
         Fid = id;
@@ -77,7 +66,7 @@ public class CourseController {
         sectionList = sectionDao.findByFacultyFacultyId(id);
         if (facultyList.size() > 0) {
             model.addAttribute("title", faculty.getFacultyName()
-            + " all courses");
+                    + " all courses");
             model.addAttribute("sectionList", sectionList);
             model.addAttribute("tempId", Fid);
 
@@ -88,12 +77,16 @@ public class CourseController {
     }
 
     @RequestMapping(value = "stream", method = RequestMethod.GET)
-    private String stream(Model model, @RequestParam int ids) {
+    private String stream(Model model, @RequestParam(required = false) Integer ids) {
 
-        secId = ids;
-        registrationList = registrationDao.findBySectionId(secId);
-        courseName = sectionDao.findOne(ids);
+        try {
+            secId = ids;
+            registrationList = registrationDao.findBySectionId(secId);
+            courseName = sectionDao.findOne(ids);
 
+        } catch (Exception e) {
+
+        }
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List1", sectionList);
         model.addAttribute("tempId", Fid);
@@ -104,9 +97,9 @@ public class CourseController {
         return "stream";
     }
 
-    @RequestMapping(value = "stream",method = RequestMethod.POST)
+    @RequestMapping(value = "stream", method = RequestMethod.POST)
     private String homeStream(@ModelAttribute @Valid ClassAnnouncements
-                                          announcements,Model model) {
+                                      announcements, Model model) {
 
         String status = announcements.getAnnouncements();
         File file = announcements.getFile();
@@ -116,27 +109,13 @@ public class CourseController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
 
-        classAnnouncementsDao.save(new ClassAnnouncements(status,file,
-                LocalDateTime.now(),sectionDao.findOne(secId)));
-        return "stream";
-    }
-
-    @RequestMapping(value = "stream1",method = RequestMethod.GET)
-    private String headerStream(@ModelAttribute @Valid ClassAnnouncements
-                                            announcements,Model model) {
-        model.addAttribute("title", faculty.getFacultyName());
-        model.addAttribute("List1", sectionList);
-        model.addAttribute("tempId", Fid);
-        model.addAttribute("post", "POST");
-        model.addAttribute("courseTitle",
-                courseName.getCourse().getCourseTitle());
-
+        classAnnouncementsDao.save(new ClassAnnouncements(status, file,
+                LocalDateTime.now(), sectionDao.findOne(secId)));
         return "stream";
     }
 
     @RequestMapping(value = "classmates1")
     private String homeClassmate(Model model) {
-
 
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List3", registrationList);
@@ -159,7 +138,6 @@ public class CourseController {
         return "about";
     }
 
-
     @RequestMapping(value = "attendance", method = RequestMethod.GET)
     private String attendance(@ModelAttribute @Valid Attendance attendance,
                               Errors errors, Model model,
@@ -169,7 +147,6 @@ public class CourseController {
         int count = 1;
         DTime = LocalDateTime.parse(dateTime);
         getDateTime = dateTime;
-
 
         for (Registration registration : registrationList) {
 
@@ -204,17 +181,15 @@ public class CourseController {
         return "attendance";
     }
 
-
     @RequestMapping(value = "attendance", method = RequestMethod.POST)
-    private String getAttendance(@ModelAttribute @Valid Attendance attendance,
-                                 Errors errors, Model model, @RequestParam String[] id) {
-
+    private String getAttendance(@ModelAttribute @Valid Attendance attendance, Errors errors,
+                                 Model model, @RequestParam(required = false) String[] id) {
+        System.out.println("Test one");
         List<Attendance> attendanceList;
         String currentDateTime = String.valueOf(LocalDateTime.now());
         String splitCurrentDate = currentDateTime.split("T")[0];
         String splitGetDate = getDateTime.split("T")[0];
         List<Attendance> attendanceList1 = (List<Attendance>) attendenceDao.findAll();
-
 
         int i;
         for (Registration registration : registrationList) {
@@ -223,15 +198,17 @@ public class CourseController {
             registration.getSemester().getSemesterId();
             semester = semesterDao.findOne(registration.getSemester().getSemesterId());
             section = sectionDao.findOne(registration.getSection().getId());
-
-            for (i = 0; i < id.length; i++) {
-                if (registration.getStudent().getStudentId().equals(id[i])) {
-                    attendenceStatus = AttendenceStatus.PRESENT;
-                    break;
-                } else {
-                    attendenceStatus = AttendenceStatus.ABSENT;
-
+            try {
+                for (i = 0; i < id.length; i++) {
+                    if (registration.getStudent().getStudentId().equals(id[i])) {
+                        attendenceStatus = AttendenceStatus.PRESENT;
+                        break;
+                    } else {
+                        attendenceStatus = AttendenceStatus.ABSENT;
+                    }
                 }
+            } catch (Exception e) {
+                attendenceStatus = AttendenceStatus.ABSENT;
             }
 
             //check attendance table empty or not
@@ -240,7 +217,6 @@ public class CourseController {
                         attendance.getType(),
                         attendenceStatus,
                         DTime, semester));
-
             } else {
                 for (int j = 0, falsecount = 0; j < attendanceList1.size(); j++) {
                     Attendance attendance1 = attendanceList1.get(j);
@@ -250,7 +226,6 @@ public class CourseController {
                     String splitDate = DateTime.split("T")[0];
                     int sectionId = attendance1.getSection().getId();
                     String studentId = attendance1.getStudent().getStudentId();
-
                     int sectionReg = registration.getSection().getId();
                     String studentReg = registration.getStudent().getStudentId();
 
@@ -270,11 +245,8 @@ public class CourseController {
                         }
                     }
                 }
-
             }
-
         }
-
 
         attendanceList = attendenceDao.findBySectionId(secId);
         attendanceList.stream().forEach(System.out::println);
@@ -285,10 +257,8 @@ public class CourseController {
                 courseName.getCourse().getCourseTitle());
         model.addAttribute("attendenceTitle",
                 "Attendence for " + section.getCourse().getCourseTitle()
-                + " section " + secId);
+                        + " section " + secId);
 
         return "attendanceStatus";
     }
-
-
 }
