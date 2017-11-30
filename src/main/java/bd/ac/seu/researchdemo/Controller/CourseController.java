@@ -65,8 +65,8 @@ public class CourseController {
         List<Faculty> facultyList = facultyDao.findByFacultyId(id);
         sectionList = sectionDao.findByFacultyFacultyId(id);
         if (facultyList.size() > 0) {
-            model.addAttribute("title", faculty.getFacultyName()
-                    + " all courses");
+            model.addAttribute("facultyName", faculty.getFacultyName()
+                    );
             model.addAttribute("sectionList", sectionList);
             model.addAttribute("tempId", Fid);
 
@@ -94,6 +94,9 @@ public class CourseController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute(new ClassAnnouncements());
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("about","ABOUT");
         return "stream";
     }
 
@@ -108,6 +111,9 @@ public class CourseController {
         model.addAttribute("tempId", Fid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("about","ABOUT");
 
         classAnnouncementsDao.save(new ClassAnnouncements(status, file,
                 LocalDateTime.now(), sectionDao.findOne(secId)));
@@ -123,6 +129,9 @@ public class CourseController {
         model.addAttribute("tempId", Fid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("about","ABOUT");
         return "classmates";
     }
 
@@ -135,6 +144,9 @@ public class CourseController {
         model.addAttribute("post", "POST");
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("about","ABOUT");
         return "about";
     }
 
@@ -178,6 +190,9 @@ public class CourseController {
         model.addAttribute("attendanceType", Type.values());
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("about","ABOUT");
         return "attendance";
     }
 
@@ -258,6 +273,9 @@ public class CourseController {
         model.addAttribute("attendenceTitle",
                 "Attendence for " + section.getCourse().getCourseTitle()
                         + " section " + secId);
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("about","ABOUT");
 
         return "attendanceStatus";
     }

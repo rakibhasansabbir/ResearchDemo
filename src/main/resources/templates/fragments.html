@@ -32,10 +32,10 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="/stream">STREAM</a></li>
-                <li><a href="/classmates1">CLASSMATES</a></li>
-                <li><a href="/about">ABOUT</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-stats"></span> ATTENDANCE</a></li>
+                <li><a href="/stream" th:text="${home}"></a></li>
+                <li><a href="/classmates1" th:text="${classmate}"></a></li>
+                <li><a href="/about" th:text="${about}"></a></li>
+                <!--<li><a href="#"><span class="glyphicon glyphicon-stats"></span> ATTENDANCE</a></li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:text="${courseTitle}"></a></li>
@@ -44,23 +44,5 @@
         </div>
     </div>
 </nav>
-
-
-
-<!--<div class="dropdown" th:fragment="dropdown">-->
-    <!--<button class="dropbtn">-></button>-->
-    <!--<div class="dropdown-content">-->
-        <!--<th><a th:href="'/home?id=' + ${tempId}" th:text="Classes"></a></th>-->
-
-        <!--<tr th:each="section : ${List1}">-->
-
-            <!--<td><a th:href="'/stream?ids=' + ${section.id}" th:text="${section.getCourse().getCourseTitle()}"></a></td>-->
-        <!--</tr>-->
-
-    <!--</div>-->
-<!--</div>-->
-
-
-
 </body>
 </html>
