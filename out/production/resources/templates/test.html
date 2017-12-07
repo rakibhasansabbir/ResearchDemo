@@ -1,46 +1,591 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Bootstrap Example</title>
+    <!--<link rel="stylesheet" href="css/simple-sidebar.css" type=" text/css" />-->
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+        @import url("https://fonts.googleapis.com/css?family=Merriweather+Sans:400,400italic");
+        @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
+        main {
+            margin-left: 100px;
+            padding: 20px;
+        }
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        h1 {
+            font-family: 'Merriweather Sans', sans-serif;
+            font-weight: 400;
+            font-size: 30px;
+        }
+        nav#sidebar {
+            background-color: #34495e;
+            position: fixed;
+            width: 100px;
+            height: 100%;
+        }
+        ul.dots * {
+            /* disable border-box from bootstrap */
+            box-sizing: content-box;
+            list-style-type: none;
+        }
+        ul.dots a {
+            text-decoration: none;
+            font-size: 20px;
+            color: #34495e;
+        }
+        ul.dots a:hover {
+            text-decoration: none;
+            font-size: 20px;
+            color: #bdc3c7;
+        }
+        ul.dots li {
+            display: box;
+            position: relative;
+            width: 100%;
+            padding: 10px 0 ;
+        }
+        ul.dots li:hover {
+            background: #2c3e50;
+        }
+        ul.dots li span {
+            display: block;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+            background-color: #FFF;
+            -webkit-box-shadow: 1px 1px 5px #808080;
+            -moz-box-shadow: 1px 1px 5px #808080;
+            box-shadow: 1px 1px 5px #808080;
+            padding: 10px;
+            width: 30px;
+            height: 30px;
+            margin: 0 auto;
+            line-height: 30px;
+            text-align: center;
+            position: relative;
+        }
+        ul.dots li mark {
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            border: 2px solid #FFF;
+            width: 20px;
+            height: 20px;
+            background-color: #FF6B6B;
+            position: absolute;
+            top: -5px;
+            left: -10px;
+            font-size: 10px;
+            line-height: 20px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            color: #FFF;
+            font-weight: 700;
+        }
+        ul.dots li mark.big {
+            width: 30px;
+            height: 30px;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+            line-height: 30px;
+            font-size: 16px;
+            top: -10px;
+            left: -15px;
+        }
+        ul.dots li mark.green {
+            background-color: #27ae60;
+        }
+        ul.dots li mark.blue {
+            background-color: #3498db;
+        }
+        ul.dots > li > a > span > mark {
+            -webkit-animation-name: bounceIn;
+            animation-name: bounceIn;
+            -webkit-transform-origin: center bottom;
+            -ms-transform-origin: center bottom;
+            transform-origin: center bottom;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+        }
+        ul.dots > li:hover > a > span > mark {
+            -webkit-animation-name: bounce;
+            animation-name: bounce;
+        }
+        ul.dots > li:hover > a > span > mark.rubberBand {
+            -webkit-animation-name: rubberBand;
+            animation-name: rubberBand;
+        }
 
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+        ul.dots > li:hover > a > span > mark.swing {
+            -webkit-transform-origin: top center;
+            -ms-transform-origin: top center;
+            transform-origin: top center;
+            -webkit-animation-name: swing;
+            animation-name: swing;
+        }
+        ul.dots > li:hover > a > span > mark.tada {
+            -webkit-animation-name: tada;
+            animation-name: tada;
+        }
+        ul.dots > li:hover > a > span > mark.wobble {
+            -webkit-animation-name: wobble;
+            animation-name: wobble;
+        }
+        li {
+            list-style-type: circle;
+        }
 
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+        code {
+            background: #ecf0f1;
+        }
+
+        /* animation keyframes */
+        @-webkit-keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                -webkit-transform: translate3d(0,0,0);
+                transform: translate3d(0,0,0);
+            }
+
+            40%, 43% {
+                -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                -webkit-transform: translate3d(0, -30px, 0);
+                transform: translate3d(0, -30px, 0);
+            }
+
+            70% {
+                -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                -webkit-transform: translate3d(0, -15px, 0);
+                transform: translate3d(0, -15px, 0);
+            }
+
+            90% {
+                -webkit-transform: translate3d(0,-4px,0);
+                transform: translate3d(0,-4px,0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                -webkit-transform: translate3d(0,0,0);
+                transform: translate3d(0,0,0);
+            }
+
+            40%, 43% {
+                -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                -webkit-transform: translate3d(0, -30px, 0);
+                transform: translate3d(0, -30px, 0);
+            }
+
+            70% {
+                -webkit-transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                -webkit-transform: translate3d(0, -15px, 0);
+                transform: translate3d(0, -15px, 0);
+            }
+
+            90% {
+                -webkit-transform: translate3d(0,-4px,0);
+                transform: translate3d(0,-4px,0);
+            }
+        }
+
+        @-webkit-keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+
+            0% {
+                opacity: 0;
+                -webkit-transform: scale3d(.3, .3, .3);
+                transform: scale3d(.3, .3, .3);
+            }
+
+            20% {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1);
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+
+            40% {
+                -webkit-transform: scale3d(.9, .9, .9);
+                transform: scale3d(.9, .9, .9);
+            }
+
+            60% {
+                opacity: 1;
+                -webkit-transform: scale3d(1.03, 1.03, 1.03);
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+
+            80% {
+                -webkit-transform: scale3d(.97, .97, .97);
+                transform: scale3d(.97, .97, .97);
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+
+            0% {
+                opacity: 1;
+                -webkit-transform: scale3d(.3, .3, .3);
+                transform: scale3d(.3, .3, .3);
+            }
+
+            20% {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1);
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+
+            40% {
+                -webkit-transform: scale3d(.9, .9, .9);
+                transform: scale3d(.9, .9, .9);
+            }
+
+            60% {
+                opacity: 1;
+                -webkit-transform: scale3d(1.03, 1.03, 1.03);
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+
+            80% {
+                -webkit-transform: scale3d(.97, .97, .97);
+                transform: scale3d(.97, .97, .97);
+            }
+
+            100% {
+                opacity: 1;
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        @-webkit-keyframes rubberBand {
+            0% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            30% {
+                -webkit-transform: scale3d(1.25, 0.75, 1);
+                transform: scale3d(1.25, 0.75, 1);
+            }
+
+            40% {
+                -webkit-transform: scale3d(0.75, 1.25, 1);
+                transform: scale3d(0.75, 1.25, 1);
+            }
+
+            50% {
+                -webkit-transform: scale3d(1.15, 0.85, 1);
+                transform: scale3d(1.15, 0.85, 1);
+            }
+
+            65% {
+                -webkit-transform: scale3d(.95, 1.05, 1);
+                transform: scale3d(.95, 1.05, 1);
+            }
+
+            75% {
+                -webkit-transform: scale3d(1.05, .95, 1);
+                transform: scale3d(1.05, .95, 1);
+            }
+
+            100% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        @keyframes rubberBand {
+            0% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            30% {
+                -webkit-transform: scale3d(1.25, 0.75, 1);
+                transform: scale3d(1.25, 0.75, 1);
+            }
+
+            40% {
+                -webkit-transform: scale3d(0.75, 1.25, 1);
+                transform: scale3d(0.75, 1.25, 1);
+            }
+
+            50% {
+                -webkit-transform: scale3d(1.15, 0.85, 1);
+                transform: scale3d(1.15, 0.85, 1);
+            }
+
+            65% {
+                -webkit-transform: scale3d(.95, 1.05, 1);
+                transform: scale3d(.95, 1.05, 1);
+            }
+
+            75% {
+                -webkit-transform: scale3d(1.05, .95, 1);
+                transform: scale3d(1.05, .95, 1);
+            }
+
+            100% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        @-webkit-keyframes swing {
+            20% {
+                -webkit-transform: rotate3d(0, 0, 1, 15deg);
+                transform: rotate3d(0, 0, 1, 15deg);
+            }
+
+            40% {
+                -webkit-transform: rotate3d(0, 0, 1, -10deg);
+                transform: rotate3d(0, 0, 1, -10deg);
+            }
+
+            60% {
+                -webkit-transform: rotate3d(0, 0, 1, 5deg);
+                transform: rotate3d(0, 0, 1, 5deg);
+            }
+
+            80% {
+                -webkit-transform: rotate3d(0, 0, 1, -5deg);
+                transform: rotate3d(0, 0, 1, -5deg);
+            }
+
+            100% {
+                -webkit-transform: rotate3d(0, 0, 1, 0deg);
+                transform: rotate3d(0, 0, 1, 0deg);
+            }
+        }
+
+        @keyframes swing {
+            20% {
+                -webkit-transform: rotate3d(0, 0, 1, 15deg);
+                transform: rotate3d(0, 0, 1, 15deg);
+            }
+
+            40% {
+                -webkit-transform: rotate3d(0, 0, 1, -10deg);
+                transform: rotate3d(0, 0, 1, -10deg);
+            }
+
+            60% {
+                -webkit-transform: rotate3d(0, 0, 1, 5deg);
+                transform: rotate3d(0, 0, 1, 5deg);
+            }
+
+            80% {
+                -webkit-transform: rotate3d(0, 0, 1, -5deg);
+                transform: rotate3d(0, 0, 1, -5deg);
+            }
+
+            100% {
+                -webkit-transform: rotate3d(0, 0, 1, 0deg);
+                transform: rotate3d(0, 0, 1, 0deg);
+            }
+        }
+
+        @-webkit-keyframes tada {
+            0% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            10%, 20% {
+                -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+            }
+
+            30%, 50%, 70%, 90% {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+            }
+
+            40%, 60%, 80% {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+            }
+
+            100% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        @keyframes tada {
+            0% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            10%, 20% {
+                -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+            }
+
+            30%, 50%, 70%, 90% {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+            }
+
+            40%, 60%, 80% {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+            }
+
+            100% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        @-webkit-keyframes wobble {
+            0% {
+                -webkit-transform: none;
+                transform: none;
+            }
+
+            15% {
+                -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+                transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+            }
+
+            30% {
+                -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+                transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+            }
+
+            45% {
+                -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+                transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+            }
+
+            60% {
+                -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+                transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+            }
+
+            75% {
+                -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+                transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+            }
+
+            100% {
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+        @keyframes wobble {
+            0% {
+                -webkit-transform: none;
+                transform: none;
+            }
+
+            15% {
+                -webkit-transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+                transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+            }
+
+            30% {
+                -webkit-transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+                transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+            }
+
+            45% {
+                -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+                transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+            }
+
+            60% {
+                -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+                transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+            }
+
+            75% {
+                -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+                transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+            }
+
+            100% {
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+
+
+    </style>
 </head>
+
 <body>
+<nav id="sidebar">
+    <ul class="dots">
+        <li>
+            <a href="#">
+                <span class="glyphicon glyphicon-user"><mark>23</mark></span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="glyphicon glyphicon-envelope"><mark class="big swing">7</mark></span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="glyphicon glyphicon-time"><mark class="rubberBand">99</mark></span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="glyphicon glyphicon-list-alt"></span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="glyphicon glyphicon-calendar"><mark class="green wobble">99+</mark></span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="glyphicon glyphicon-random"><mark class="blue tada">13</mark></span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<main>
+    <h1>Hello world!</h1>
+    <p>Move cursor over icon on the left to animate marks</p>
+    <ul>
+        <li>To change mark color use following class's: <code>.green, .blue</code></li>
+        <li>Marks are prepare to handle with two-digit numbers from <code>0 to 99</code>. If your number is greater than 99 use logic to display <code>99+</code>.</li>
+    </ul>
+    <!--   <meter value="2" min="0" max="10">2 out of 10</meter><br>
+      <meter value="0.6">60%</meter>   -->
+</main>
 
-<div class="jumbotron jumbotron-fluid text-center">
-    <h1>My First Bootstrap Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <h3>Column 1</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-        <div class="col-sm-4">
-            <h3>Column 2</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-        <div class="col-sm-4">
-            <h3>Column 3</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-    </div>
-</div>
+
 
 </body>
 </html>

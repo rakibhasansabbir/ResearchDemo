@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class CourseController {
+public class FacultyController {
     @Autowired
     FacultyDao facultyDao;
     @Autowired
@@ -57,26 +57,25 @@ public class CourseController {
         return "login";
     }
 
-    @RequestMapping(value = "home", method = RequestMethod.GET)
+    @RequestMapping(value = "courses", method = RequestMethod.GET)
     private String home(Model model, @RequestParam int id) {
         Fid = id;
-        section = sectionDao.findOne(id);
+        //section = sectionDao.findOne(id);
         faculty = facultyDao.findOne(id);
         List<Faculty> facultyList = facultyDao.findByFacultyId(id);
         sectionList = sectionDao.findByFacultyFacultyId(id);
         if (facultyList.size() > 0) {
-            model.addAttribute("facultyName", faculty.getFacultyName()
-                    );
+            model.addAttribute("facultyName", faculty.getFacultyName());
             model.addAttribute("sectionList", sectionList);
             model.addAttribute("tempId", Fid);
 
         } else {
             model.addAttribute("title", "You have not registered any course in this semester");
         }
-        return "index";
+        return "courses";
     }
 
-    @RequestMapping(value = "stream", method = RequestMethod.GET)
+    @RequestMapping(value = "home", method = RequestMethod.GET)
     private String stream(Model model, @RequestParam(required = false) Integer ids) {
 
         try {
@@ -95,12 +94,12 @@ public class CourseController {
                 courseName.getCourse().getCourseTitle());
         model.addAttribute(new ClassAnnouncements());
         model.addAttribute("home","HOME");
-        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("students","STUDENTS");
         model.addAttribute("about","ABOUT");
-        return "stream";
+        return "home";
     }
 
-    @RequestMapping(value = "stream", method = RequestMethod.POST)
+    @RequestMapping(value = "home", method = RequestMethod.POST)
     private String homeStream(@ModelAttribute @Valid ClassAnnouncements
                                       announcements, Model model) {
 
@@ -112,15 +111,15 @@ public class CourseController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute("home","HOME");
-        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("students","STUDENTS");
         model.addAttribute("about","ABOUT");
 
         classAnnouncementsDao.save(new ClassAnnouncements(status, file,
                 LocalDateTime.now(), sectionDao.findOne(secId)));
-        return "stream";
+        return "home";
     }
 
-    @RequestMapping(value = "classmates1")
+    @RequestMapping(value = "students")
     private String homeClassmate(Model model) {
 
         model.addAttribute("title", faculty.getFacultyName());
@@ -130,9 +129,9 @@ public class CourseController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute("home","HOME");
-        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("students","STUDENTS");
         model.addAttribute("about","ABOUT");
-        return "classmates";
+        return "students";
     }
 
     @RequestMapping(value = "about")
@@ -145,7 +144,7 @@ public class CourseController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute("home","HOME");
-        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("students","STUDENTS");
         model.addAttribute("about","ABOUT");
         return "about";
     }
@@ -191,7 +190,7 @@ public class CourseController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute("home","HOME");
-        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("students","STUDENTS");
         model.addAttribute("about","ABOUT");
         return "attendance";
     }
@@ -274,7 +273,7 @@ public class CourseController {
                 "Attendence for " + section.getCourse().getCourseTitle()
                         + " section " + secId);
         model.addAttribute("home","HOME");
-        model.addAttribute("classmate","CLASSMATE");
+        model.addAttribute("students","STUDENTS");
         model.addAttribute("about","ABOUT");
 
         return "attendanceStatus";
