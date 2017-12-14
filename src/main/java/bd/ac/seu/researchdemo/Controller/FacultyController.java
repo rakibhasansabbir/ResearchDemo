@@ -86,8 +86,10 @@ public class FacultyController {
         } catch (Exception e) {
 
         }
+        model.addAttribute("attendance","Attendance");
+        model.addAttribute("localDateTime", LocalDateTime.now());
         model.addAttribute("title", faculty.getFacultyName());
-        model.addAttribute("List1", sectionList);
+        model.addAttribute("sectionList", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute("post", "POST");
         model.addAttribute("courseTitle",
@@ -105,8 +107,10 @@ public class FacultyController {
 
         String status = announcements.getAnnouncements();
         File file = announcements.getFile();
+        model.addAttribute("attendance","Attendance");
+        model.addAttribute("localDateTime", LocalDateTime.now());
         model.addAttribute("title", faculty.getFacultyName());
-        model.addAttribute("List1", sectionList);
+        model.addAttribute("sectionList", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
@@ -122,9 +126,11 @@ public class FacultyController {
     @RequestMapping(value = "students")
     private String homeClassmate(Model model) {
 
+        model.addAttribute("attendance","Attendance");
+        model.addAttribute("localDateTime", LocalDateTime.now());
         model.addAttribute("title", faculty.getFacultyName());
         model.addAttribute("List3", registrationList);
-        model.addAttribute("List1", sectionList);
+        model.addAttribute("sectionList", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
@@ -136,9 +142,11 @@ public class FacultyController {
 
     @RequestMapping(value = "about")
     private String homeAbout(Model model) {
+
+        model.addAttribute("attendance","Attendance");
         model.addAttribute("localDateTime", LocalDateTime.now());
         model.addAttribute("title", faculty.getFacultyName());
-        model.addAttribute("List1", sectionList);
+        model.addAttribute("sectionList", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute("post", "POST");
         model.addAttribute("courseTitle",
@@ -183,7 +191,7 @@ public class FacultyController {
         }
 
         model.addAttribute("AttendenceList", attendenceServiceList);
-        model.addAttribute("List1", sectionList);
+        model.addAttribute("sectionList", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute(new Attendance());
         model.addAttribute("attendanceType", Type.values());
@@ -262,10 +270,11 @@ public class FacultyController {
             }
         }
 
+
         attendanceList = attendenceDao.findBySectionId(secId);
         attendanceList.stream().forEach(System.out::println);
         model.addAttribute("List6", attendanceList);
-        model.addAttribute("List1", sectionList);
+        model.addAttribute("sectionList", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());

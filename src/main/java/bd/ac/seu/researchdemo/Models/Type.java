@@ -7,7 +7,7 @@ package bd.ac.seu.researchdemo.Models;
 public enum Type {
 
     CLASS("Class"),
-    Exam("Exam");
+    MAKEUP("Makeup");
 
     private final String Type;
 

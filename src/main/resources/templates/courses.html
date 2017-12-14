@@ -7,27 +7,28 @@
 <body class="container body-content">
 
 <nav th:replace="fragments :: navigation" ></nav>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>
-<div class="container" style="margin-top: 10px">
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"/>-->
+<div class="container" style="margin-top: 70px">
 
-    <div class="card-deck">
 
     <div th:each="Course : ${sectionList}">
-        <div class="card bg-secondary text-white" style="width:300px">
-            <div class="card-body">
-                <h4 class="card-title"><a th:text="${Course.getCourse().getCourseTitle()}"></a></h4>
-                <h5 class="card-text"><a th:text="Section + ${Course.section}"></a></h5>
-                <h5 class="card-text"><a th:text="${facultyName}"></a></h5>
-                <div class="container">
-                    <a th:href="'/home?ids=' + ${Course.id}" class="btn btn-primary">See Profile</a>
-                    <button type="button" class="btn btn-success">Notification <span class="badge">3</span></button>
-                    <button type="button" class="btn btn-danger">Message <span class="badge">5</span></button>
+        <div class="col-xs-3" style="width: 350px; height: 200px">
+            <div class="thumbnail" style="background-color: #343434">
+                <!--<img src="https://cdn2.iconfinder.com/data/icons/business-charts/512/account-512.png" alt="..."/>-->
+                <div class="caption" style="color: #ecf0f1">
+                    <h4 th:text="${Course.getCourse().getCourseTitle()}"></h4>
+                    <h5 th:text="Section + ${Course.section}"></h5>
+                    <h5 th:text="${facultyName}"></h5>
+
+                        <a th:href="'/home?ids=' + ${Course.id}" class="btn btn-primary btn-sm">See Profile</a>
+                        <button type="button" class="btn btn-success btn-sm">Notification <span class="badge">3</span></button>
+                        <button type="button" class="btn btn-danger btn-sm">Message <span class="badge">5</span></button>
+
                 </div>
             </div>
         </div>
-        <br/>
     </div>
-</div>
+
 
 </div>
 </body>

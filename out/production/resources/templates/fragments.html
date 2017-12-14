@@ -1,25 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head th:fragment="head">
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">My Cheeses</title>
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-
-
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/4.0.0-beta.2/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-
-    <!--Sidebar navbar design-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -61,65 +48,101 @@
         }
 
         @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 15px;}
-            .sidenav a {font-size: 18px;}
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
         }
+
+
     </style>
 </head>
 <body>
 
-<!--Top Navigation bar-->
+
 <div>
-<nav th:fragment="navigation" class="navbar navbar-inverse navbar-fixed-top">
-<!--<nav th:fragment="navigation" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">-->
-    <div class="container-fluid">
-        <div class="navbar-header" style="margin-top: 7px">
-            <span style="font-size:25px;cursor:pointer; color: white" onclick="openNav()">&#9776; </span>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="/home" th:text="${home}"></a></li>
-                <li><a href="/students" th:text="${students}"></a></li>
-                <li><a href="/about" th:text="${about}"></a></li>
-                <!--<li><a href="#"><span class="glyphicon glyphicon-stats"></span> ATTENDANCE</a></li>-->
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="${courseTitle}"></a></li>
-                <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-            </ul>
+    <!-- Modal -->
+    <div th:fragment="attendanceModel" class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Attendence</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="attendance" method="get">
+                        <input type="datetime-local" name="dateTime" th:value="${localDateTime}"/>
+                        <input type="submit" value="SELECT"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
-
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="font-size: 25px">&#9776;</a>
-        <div class="sidebar-header" style="position: absolute">
-            <a href="#">About</a>
+    <!--Top Navigation bar-->
+    <nav th:fragment="navigation" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header" style="margin-top: 7px">
+                <span style="font-size:25px;cursor:pointer; color: white" onclick="openNav()">&#9776; </span>
+            </div>
+            <div class="navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/home" th:text="${home}"></a></li>
+                    <li><a href="/students" th:text="${students}"></a></li>
+                    <li><a href="/about" th:text="${about}"></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:text="${courseTitle}"></a></li>
+                    <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                </ul>
+            </div>
         </div>
 
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-        <a href="#">Contact</a>
-    </div>
-    <script>
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-        }
 
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-        }
-    </script>
-</nav>
+        <div id="mySidenav" class="sidenav">
+            <div style="position: static">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="font-size: 25px">&#9776;</a>
+
+            </div>
+            <div class="container">
+                <a href="#" type="button" data-toggle="modal" data-target="#myModal" th:text="${attendance}"></a>
+                <div th:each="Course : ${sectionList}">
+                    <a href="#" th:text="${Course.getCourse().getCourseTitle()}">About</a>
+                </div>
+
+                <!--<a href="#">Services</a>-->
+                <!--<a href="#">Clients</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+                <!--<a href="#">Contact</a>-->
+            </div>
+        </div>
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        </script>
+
+    </nav>
 </div>
 
 </body>

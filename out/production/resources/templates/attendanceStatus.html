@@ -20,6 +20,7 @@
             <th>Date And Time</th>
             <th>ID</th>
             <th>Name</th>
+            <th>Type</th>
             <th>Status</th>
         </tr>
         </thead>
@@ -28,6 +29,7 @@
             <td th:text="${Student.getDateTime()}"></td>
             <td th:text="${Student.getStudent().studentId}"></td>
             <td th:text="${Student.getStudent().studentName}"> </td>
+            <td th:text="${Student.getType()}"> </td>
             <td th:text="${Student.getAttendenceStatus()}"></td>
         </tr>
         </tbody>

@@ -16,7 +16,7 @@ public interface AttendenceDao extends CrudRepository<Attendance,Integer> {
     public List<Attendance> findByAttendenceStatusAndSection_IdAndStudentStudentId(AttendenceStatus attendendenceStatus, int sectionId, String studentId);
     public List<Attendance> findByDateTimeAndSectionIdAndStudentStudentId(LocalDateTime dateTime,int sectionId,String studentId);
 
-    public List<Attendance> findByDateTime(LocalDateTime dateTime);
+    public List<Attendance> findByStudentStudentIdAndSectionId(String Sid,int SecId);
 
 
 }

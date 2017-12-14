@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments :: head">
 
-    <head th:replace="fragments :: head"></head>
-
+</head>
 <body>
 
-
 <div class="container">
-    <h2>Modal Example</h2>
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
@@ -19,10 +15,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Rakib</h4>
                 </div>
                 <div class="modal-body">
-                   <input type="datetime-local"/>
+                    <input type="datetime-local"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -31,7 +27,17 @@
 
         </div>
     </div>
+
+    <h2>Modal Exampl</h2>
+    <!-- Trigger the modal with a button -->
+    <div>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+    </div>
+    <nav th:replace="fragments :: navigation" ></nav>
+
 </div>
 
 </body>
 </html>
+
+
