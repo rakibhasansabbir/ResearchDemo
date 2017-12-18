@@ -31,11 +31,7 @@ public class StudentController {
     @Autowired
     SectionDao sectionDao;
 
-
-
     List<Registration> registrationList,registrationList1;
-
-
 
     String Sid;
     int secId;
@@ -51,51 +47,44 @@ public class StudentController {
         return "Student_login";
     }
 
-    @RequestMapping(value = "home", method = RequestMethod.GET)
+    @RequestMapping(value = "courses", method = RequestMethod.GET)
     private String home(Model model, @RequestParam String id) {
         Sid = id;
         student = studentDao.findOne(id);
         List<Student> studentList = studentDao.findByStudentId(id);
         registrationList = registrationDao.findByStudentStudentId(id);
         if (studentList.size() > 0) {
-            model.addAttribute("title", student.getStudentName()
-                    + " all courses");
+            model.addAttribute("title", student.getStudentName());
             model.addAttribute("registrationList", registrationList);
-            //model.addAttribute("tempId", Sid);
 
         } else {
             model.addAttribute("title", "You have not registered any course in this semester");
         }
-        return "Student_index";
+        return "Student_courses";
     }
 
-    @RequestMapping(value = "Student_stream", method = RequestMethod.GET)
-    private String stream(Model model, @RequestParam int ids) {
+    @RequestMapping(value = "home", method = RequestMethod.GET)
+    private String stream(Model model, @RequestParam(required = false) Integer ids) {
 
-        secId = ids;
-        courseName = sectionDao.findOne(secId);
-        registrationList1 = registrationDao.findBySectionId(secId);
+        try {
+            secId = ids;
+            courseName = sectionDao.findOne(secId);
+            registrationList1 = registrationDao.findBySectionId(secId);
+        }catch (Exception e){
 
-        model.addAttribute("title", student.getStudentName());
-        model.addAttribute("List1", registrationList);
-        model.addAttribute("tempId", Sid);
-        model.addAttribute("courseTitle",
-                courseName.getCourse().getCourseTitle());
-        return "Student_stream";
+        }
+
+        model.addAttribute("courseTitle",courseName.getCourse().getCourseTitle());
+        model.addAttribute("facultyName", courseName.getFaculty().getFacultyName());
+        model.addAttribute("registrationList", registrationList);
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmates","CLASSMATES");
+        model.addAttribute("about","ABOUT");
+        return "Student_home";
     }
 
-    @RequestMapping(value = "stream1",method = RequestMethod.GET)
-    private String headerStream(Model model) {
-        model.addAttribute("title", student.getStudentName());
-        model.addAttribute("List1", registrationList);
-        model.addAttribute("tempId", Sid);
-        model.addAttribute("courseTitle",
-                courseName.getCourse().getCourseTitle());
 
-        return "Student_stream";
-    }
-
-    @RequestMapping(value = "classmates1")
+    @RequestMapping(value = "classmates")
     private String homeClassmate(Model model) {
 
 
@@ -104,6 +93,9 @@ public class StudentController {
         model.addAttribute("tempId", Sid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmates","CLASSMATES");
+        model.addAttribute("about","ABOUT");
 
 
         return "Student_classmates";
@@ -114,6 +106,9 @@ public class StudentController {
         model.addAttribute("title", student.getStudentName());
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
+        model.addAttribute("home","HOME");
+        model.addAttribute("classmates","CLASSMATES");
+        model.addAttribute("about","ABOUT");
         return "Student_about";
     }
 

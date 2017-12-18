@@ -60,7 +60,6 @@ public class FacultyController {
     @RequestMapping(value = "courses", method = RequestMethod.GET)
     private String home(Model model, @RequestParam int id) {
         Fid = id;
-        //section = sectionDao.findOne(id);
         faculty = facultyDao.findOne(id);
         List<Faculty> facultyList = facultyDao.findByFacultyId(id);
         sectionList = sectionDao.findByFacultyFacultyId(id);

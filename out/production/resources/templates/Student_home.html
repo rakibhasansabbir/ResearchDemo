@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments :: head"></head>
+
+<body class="container body-content">
+
+<div class="container">
+
+    <div class="jumbotron text-center" style="margin-top:45px">
+        <h1 th:text="${courseTitle}"></h1>
+        <h2 th:text="${facultyName}"></h2>
+        <h5>Department of Computer Science and Engineering</h5>
+    </div>
+    <div th:replace="fragments :: attendanceModel"></div>
+
+    <!--Post-->
+    <div class="container">
+
+        <form>
+            <div>
+
+                <textarea class="form-control" placeholder="Type your note here..."></textarea>
+            </div>
+        </form>
+    </div>
+</div>
+<nav th:replace="student_fragments :: navigation"></nav>
+</body>
+</html>

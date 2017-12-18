@@ -15,25 +15,15 @@
 <br/>
 <br/>
 <br/>
-
-<h1 th:text="${title}">Default Title</h1>
-
-
-
 <table class="table">
 
     <tr>
         <th style="text-align:center;">Name</th>
-
-
     </tr>
     <tr th:each="Student1 : ${List3}">
         <td style="text-align:center;" th:text="${Student1.getStudent().getStudentName()}"></td>
 
     </tr>
-
-
-
 </table>
 
 </body>
