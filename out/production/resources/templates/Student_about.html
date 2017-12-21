@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments :: head"></head>
 
 <body class="container body-content">
 
-<nav th:replace="student_fragments :: navigation"></nav>
+<nav th:replace="fragments :: navigation"></nav>
 <div th:replace="fragments :: dropdown" ></div>
 
 <br/>
@@ -21,11 +22,6 @@
 <input type="submit" value="Show the Attendence Status for this Section" />
 
 </form>
-
-
-
-
-
 
 </body>
 </html>

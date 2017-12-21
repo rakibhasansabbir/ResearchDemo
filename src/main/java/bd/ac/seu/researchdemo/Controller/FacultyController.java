@@ -52,6 +52,16 @@ public class FacultyController {
     LocalDateTime localDateTime;
     AttendenceStatus attendenceStatus;
 
+    public void commonModelAttributes(Model model){
+        model.addAttribute("home","HOME");
+        model.addAttribute("homePath","/home");
+        model.addAttribute("students","STUDENTS");
+        model.addAttribute("studentPath","/students");
+        model.addAttribute("about","ABOUT");
+        model.addAttribute("aboutPath","/about");
+        model.addAttribute("courseTotlepath","Course.getCourse().getCourseTitle()");
+    }
+
     @RequestMapping(value = "/")
     public String login() {
         return "login";
@@ -94,9 +104,7 @@ public class FacultyController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute(new ClassAnnouncements());
-        model.addAttribute("home","HOME");
-        model.addAttribute("students","STUDENTS");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
         return "home";
     }
 
@@ -113,9 +121,7 @@ public class FacultyController {
         model.addAttribute("tempId", Fid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
-        model.addAttribute("home","HOME");
-        model.addAttribute("students","STUDENTS");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
 
         classAnnouncementsDao.save(new ClassAnnouncements(status, file,
                 LocalDateTime.now(), sectionDao.findOne(secId)));
@@ -133,9 +139,7 @@ public class FacultyController {
         model.addAttribute("tempId", Fid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
-        model.addAttribute("home","HOME");
-        model.addAttribute("students","STUDENTS");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
         return "students";
     }
 
@@ -150,9 +154,7 @@ public class FacultyController {
         model.addAttribute("post", "POST");
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
-        model.addAttribute("home","HOME");
-        model.addAttribute("students","STUDENTS");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
         return "about";
     }
 
@@ -196,9 +198,7 @@ public class FacultyController {
         model.addAttribute("attendanceType", Type.values());
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
-        model.addAttribute("home","HOME");
-        model.addAttribute("students","STUDENTS");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
         return "attendance";
     }
 
@@ -280,9 +280,7 @@ public class FacultyController {
         model.addAttribute("attendenceTitle",
                 "Attendence for " + section.getCourse().getCourseTitle()
                         + " section " + secId);
-        model.addAttribute("home","HOME");
-        model.addAttribute("students","STUDENTS");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
 
         return "attendanceStatus";
     }

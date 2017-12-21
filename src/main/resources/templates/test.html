@@ -7,33 +7,29 @@
 
 </head>
 <body>
-<table class="table table-bordered table-hover">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Age</th>
-    </tr>
-    <tr>
-        <td>2014100000071</td>
-        <td th:text="${test}">Rakib Hasan Sabbir</td>
-        <td>22</td>
-    </tr>
-    <tr>
-        <td>2014100000072</td>
-        <td>Rakib Hasan khan</td>
-        <td>22</td>
-    </tr>
-    <tr>
-        <td>2014100000073</td>
-        <td>Rakib Hasan tamim</td>
-        <td>22</td>
-    </tr>
-</table>
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 
-<table>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-</table>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
 
+    </div>
+</div>
 </body>
 </html>
 

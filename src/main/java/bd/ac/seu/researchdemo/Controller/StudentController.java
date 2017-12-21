@@ -39,6 +39,16 @@ public class StudentController {
     Section courseName;
 
     List<Attendance> attendanceList;
+    public void commonModelAttributes(Model model){
+        model.addAttribute("home","HOME");
+        model.addAttribute("homePath","/student/home");
+        model.addAttribute("students","STUDENTS");
+        model.addAttribute("studentPath","/student/classmates");
+        model.addAttribute("about","ABOUT");
+        model.addAttribute("aboutPath","/student/about");
+        model.addAttribute("sectionList", registrationList);
+        model.addAttribute("courseTotlepath","getSection().getCourse().getCourseTitle()");
+    }
 
 
 
@@ -56,6 +66,7 @@ public class StudentController {
         if (studentList.size() > 0) {
             model.addAttribute("title", student.getStudentName());
             model.addAttribute("registrationList", registrationList);
+            commonModelAttributes(model);
 
         } else {
             model.addAttribute("title", "You have not registered any course in this semester");
@@ -77,9 +88,8 @@ public class StudentController {
         model.addAttribute("courseTitle",courseName.getCourse().getCourseTitle());
         model.addAttribute("facultyName", courseName.getFaculty().getFacultyName());
         model.addAttribute("registrationList", registrationList);
-        model.addAttribute("home","HOME");
-        model.addAttribute("classmates","CLASSMATES");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
+
         return "Student_home";
     }
 
@@ -93,9 +103,7 @@ public class StudentController {
         model.addAttribute("tempId", Sid);
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
-        model.addAttribute("home","HOME");
-        model.addAttribute("classmates","CLASSMATES");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
 
 
         return "Student_classmates";
@@ -106,9 +114,7 @@ public class StudentController {
         model.addAttribute("title", student.getStudentName());
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
-        model.addAttribute("home","HOME");
-        model.addAttribute("classmates","CLASSMATES");
-        model.addAttribute("about","ABOUT");
+        commonModelAttributes(model);
         return "Student_about";
     }
 
@@ -120,9 +126,10 @@ public class StudentController {
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         model.addAttribute("List6", attendanceList);
+        commonModelAttributes(model);
 
 
-        return  "Student_attendenceStatus";
+        return  "attendanceStatus";
 
     }
 

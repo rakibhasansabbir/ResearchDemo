@@ -14,8 +14,6 @@ import java.util.List;
 public interface AttendenceDao extends CrudRepository<Attendance,Integer> {
     public List<Attendance> findBySectionId(int id);
     public List<Attendance> findByAttendenceStatusAndSection_IdAndStudentStudentId(AttendenceStatus attendendenceStatus, int sectionId, String studentId);
-    public List<Attendance> findByDateTimeAndSectionIdAndStudentStudentId(LocalDateTime dateTime,int sectionId,String studentId);
-
     public List<Attendance> findByStudentStudentIdAndSectionId(String Sid,int SecId);
 
 
