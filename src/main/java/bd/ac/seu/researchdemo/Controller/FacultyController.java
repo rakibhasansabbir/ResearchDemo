@@ -195,7 +195,7 @@ public class FacultyController {
         model.addAttribute("sectionList", sectionList);
         model.addAttribute("tempId", Fid);
         model.addAttribute(new Attendance());
-        model.addAttribute("attendanceType", Type.values());
+        model.addAttribute("attendanceT", Type.values());
         model.addAttribute("courseTitle",
                 courseName.getCourse().getCourseTitle());
         commonModelAttributes(model);

@@ -12,6 +12,7 @@
         body {
             font-family: "Lato", sans-serif;
         }
+
         .sidenav {
             height: 100%;
             width: 0;
@@ -24,6 +25,7 @@
             transition: 0.5s;
             padding-top: 60px;
         }
+
         .sidenav a {
             padding: 8px 8px 8px 32px;
             text-decoration: none;
@@ -32,24 +34,30 @@
             display: block;
             transition: 0.3s;
         }
+
         .sidenav a:hover {
             color: #f1f1f1;
         }
+
         .sidenav .closebtn {
             position: absolute;
             top: 0;
+
             left: -70px;
             font-size: 36px;
             margin-left: 50px;
         }
+
         @media screen and (max-height: 450px) {
             .sidenav {
                 padding-top: 15px;
             }
+
             .sidenav a {
                 font-size: 18px;
             }
         }
+
     </style>
 </head>
 <body>
@@ -87,9 +95,9 @@
             </div>
             <div class="navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="/home" th:text="${home}"></a></li>
-                    <li><a href="/students" th:text="${students}"></a></li>
-                    <li><a href="/about" th:text="${about}"></a></li>
+                    <li><a th:href="${homePath}" th:text="${home}"></a></li>
+                    <li><a th:href="${studentPath}" th:text="${students}"></a></li>
+                    <li><a th:href="${aboutPath}" th:text="${about}"></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:text="${courseTitle}"></a></li>
@@ -107,7 +115,7 @@
             <div class="container">
                 <a href="#" type="button" data-toggle="modal" data-target="#myModal" th:text="${attendance}"></a>
                 <div th:each="Course : ${sectionList}">
-                    <a href="#" th:text="${Course.getCourse().getCourseTitle()}">About</a>
+                    <a href="#" th:text="Course.${courseTotlepath}">About</a>
                 </div>
 
             </div>
@@ -116,6 +124,7 @@
             function openNav() {
                 document.getElementById("mySidenav").style.width = "250px";
             }
+
             function closeNav() {
                 document.getElementById("mySidenav").style.width = "0";
             }

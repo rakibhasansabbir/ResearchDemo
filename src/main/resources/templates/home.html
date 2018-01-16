@@ -19,9 +19,48 @@
         <form>
             <div>
 
-                <textarea class="form-control" placeholder="Type your note here..."></textarea>
+
             </div>
         </form>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col-sm-4 col-md-12">
+                <div class="thumbnail">
+                    <h4 class="active" th:text="${title}">Rezwan Islam Khan</h4>
+                    <div class="caption">
+                        <textarea class="form-control" placeholder="Type your note here..." ></textarea>
+                        <br/>
+                        <div>
+                            <div class="dropdown">
+                                <button class="btn  dropdown-toggle col-lg-12" type="button" data-toggle="dropdown">Select who can see your post
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">HTML</a></li>
+                                    <li><a href="#">CSS</a></li>
+                                    <li><a href="#">JavaScript</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">About Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p>...</p>
+                        <p class="container">
+                            <a href="#" class="glyphicon glyphicon-picture" role="button"
+                               style="color: #8D95A9" title="Attatch Image"></a>
+                            <a href="#" class="glyphicon glyphicon-paperclip" role="button"
+                               style="color: #8D95A9" title="Attatch File"></a>
+                            <a href="#" class="glyphicon glyphicon-link" role="button"
+                               style="color: #8D95A9" title="Attatch Link"></a>
+                            <button type="button" class="btn btn-success right">Post</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <nav th:replace="fragments :: navigation"></nav>
