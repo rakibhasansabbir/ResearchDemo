@@ -2,11 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="utf-8"/>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <!--<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css"/>-->
+    <!--<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap-theme.min.css"/>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>-->
 
     <!-- jQuery library -->
     <script th:src="@{/jquery/jquery.min.js}" src="../static/jquery/jquery.min.js"></script>
@@ -14,24 +15,47 @@
     <!-- Latest compiled JavaScript -->
     <script th:src="@{/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
 
+    <!-- Google web fonts -->
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel='stylesheet' />
+
+    <!-- The main CSS file -->
+    <link th:href="@{/assets/css/style.css}" href="../static/assets/css/style.css" rel="stylesheet" />
 
 </head>
 <body>
-
-<div class="container">
-    <form class="form-control-static" method="post">
-        <input type="file" name="file"/>
-        <br/>
-        <input type="submit" class="btn btn-success"/>
-    </form>
-</div>
-
-<div>
-    <ul th:each="fileUpload : ${fileList}">
-        <li><img th:src="${fileUpload.file}"/></li>
+<form id="upload" method="post" action="/test"  enctype="multipart/form-data">
+    <ul>
+        <!-- The file uploads will be shown here -->
     </ul>
-</div>
+    <div id="drop">
+        Drop Here
 
+        <a>Browse</a>
+        <input type="file" name="upl" th:multiple="multiple"  />
+    </div>
+
+<button type="submit" >send</button>
+
+
+</form>
+
+
+
+<!-- JavaScript Includes -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script th:src="@{/assets/js/jquery.knob.js}" src="../static/assets/js/jquery.knob.js" ></script>
+
+<!-- jQuery File Upload Dependencies -->
+<script th:src="@{assets/js/jquery.ui.widget.js}" src="../static/assets/js/jquery.ui.widget.js"></script>
+<script th:src="@{assets/js/jquery.iframe-transport.js}" src="../static/assets/js/jquery.iframe-transport.js"></script>
+<script th:src="@{assets/js/jquery.fileupload.js}" src="../static/assets/js/jquery.fileupload.js"></script>
+
+<!-- Our main JS file -->
+<script th:src="@{assets/js/script.js}" src="../static/assets/js/script.js"></script>
+
+
+<!-- Only used for the demos. Please ignore and remove. -->
+<script src="http://cdn.tutorialzine.com/misc/enhance/v1.js" ></script>
 </body>
 </html>
 
